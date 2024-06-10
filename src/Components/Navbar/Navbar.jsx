@@ -17,7 +17,9 @@ const Navbar = () => {
                 <li>
                     <Link to="/">Browse</Link>
                 </li>
-                <li>Activity</li>
+                <li>
+                    <Link to="/">Topics</Link>
+                </li>
                 <li><button className='btn'>Sign In</button></li>
                 <li><button className='btn'>Sign Up</button></li>
             </ul>
