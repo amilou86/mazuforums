@@ -7,6 +7,7 @@ import Activity from './Components/Activity/Activity';
 import SignIn from './Components/SignIn/SignIn';
 import SignUp from './Components/SignUp/SignUp';
 import MainPage from './Components/Forum/MainPage';
+import TopicDiscussions from './Components/Forum/TopicDiscussions';
 
 const App = () => {
   console.log("App component is being rendered.");
@@ -15,6 +16,8 @@ const App = () => {
       <div>
         <Navbar />
         <Hero />
+        {/* <Browse /> */}
+        <MainPage />
         <div className="container">
           <Routes>
             <Route path="/" element={<Browse />} />
@@ -22,8 +25,8 @@ const App = () => {
             <Route path="/activity" element={<Activity />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/topic/:topicName" element={<TopicDiscussions />} />
           </Routes>
-          <MainPage />
         </div>
       </div>
     </Router>
@@ -31,3 +34,4 @@ const App = () => {
 }
 
 export default App;
+

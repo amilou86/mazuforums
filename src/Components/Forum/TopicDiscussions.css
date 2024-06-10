@@ -1,0 +1,27 @@
+.topic-discussions {
+    padding: 20px;
+}
+
+.topic-name {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.discussion {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.discussion-title {
+    font-size: 20px;
+}
+
+.discussion-info {
+    font-style: italic;
+    color: #666;
+}
+
+.discussion-content {
+    margin-top: 10px;
+}

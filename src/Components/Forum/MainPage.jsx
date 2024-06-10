@@ -28,16 +28,13 @@ const MainPage = () => {
         }
     };
 
-    console.log('MainPage component is being rendered.');
-
     return (
         <div>
-            <h1>Main Page</h1>
-            <h2>Forum Topics:</h2>
+            <h1>Forum Topics:</h1>
             <ul>
                 {topics.map(topic => (
                     <li key={topic.id}>
-                        <Link to={`/topic/${topic.id}`}>
+                        <Link to={`/topic/${topic.title}`}>
                             {topic.title}
                         </Link>
                     </li>

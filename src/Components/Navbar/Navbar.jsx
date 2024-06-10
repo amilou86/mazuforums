@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom' // Import Link component
 import './Navbar.css'
 import MFlogo from '../../assets/MFlogo1.png'
 import MFlogo2 from '../../assets/MFlogo2.png'
@@ -10,11 +11,15 @@ const Navbar = () => {
         <nav className='container'>
             <img src={MFlogo2} alt="logo" className='logo' />
             <ul>
-                <li>Home</li>
-                <li>Browse</li>
+                <li>
+                    <Link to="/">Home</Link>  {/* Link to the root path ("/") for Home */}
+                </li>
+                <li>
+                    <Link to="/">Browse</Link>
+                </li>
                 <li>Activity</li>
                 <li><button className='btn'>Sign In</button></li>
-                <li>Sign Up</li>
+                <li><button className='btn'>Sign Up</button></li>
             </ul>
 
         </nav>
