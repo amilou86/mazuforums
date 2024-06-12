@@ -1,27 +1,33 @@
 .topic-discussions {
-    padding: 20px;
+    margin: 2rem auto;
+    max-width: 800px;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
 
 .topic-name {
-    font-size: 24px;
-    margin-bottom: 20px;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.discussion-list {
+    list-style: none;
+    padding: 0;
 }
 
 .discussion {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 20px;
-}
-
-.discussion-title {
-    font-size: 20px;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+    padding: 1rem 0;
 }
 
 .discussion-info {
-    font-style: italic;
-    color: #666;
+    font-size: 0.8rem;
+    color: #aaa;
+    margin-bottom: 0.5rem;
 }
 
 .discussion-content {
-    margin-top: 10px;
+    /* Adjust font size and styling as needed */
 }
