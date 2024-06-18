@@ -37,3 +37,14 @@ a {
   align-items: center;
   justify-content: center;
 }
+
+.container .SubforumList {
+  /* More specific selector */
+  z-index: 9;
+}
+
+.navbar {
+  z-index: 0;
+  /* Lower z-index to potentially hide under SubforumList */
+  /* Other styles for Navbar */
+}

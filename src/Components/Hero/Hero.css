@@ -1,13 +1,18 @@
 .hero {
     width: 100%;
     min-height: 100vh;
-    background: linear-gradient(rgba(1, 76, 122, 0.7), rgba(1, 76, 122, 0.7)), url('../../assets/MFbackground.webp');
+    background: linear-gradient(rgba(1, 76, 122, 0.7), rgba(1, 76, 122, 0.7)), url('../../assets/background2.svg');
     background-size: cover;
     background-position: center;
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-position: top;
+    /* Align image to the top */
+    padding-top: Xpx;
+    /* Add some padding to create space between image and navbar */
+    /* Other styles for Hero section */
 }
 
 .hero-text {

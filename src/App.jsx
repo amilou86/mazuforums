@@ -1,30 +1,45 @@
-import React from 'react';
+import { React, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './Components/Navbar/Navbar';
 import Hero from './Components/Hero/Hero';
 import Browse from './Components/Browse/Browse'; // Import Browse component
 import SignIn from './Components/SignIn/SignIn';
 import SignUp from './Components/SignUp/SignUp';
-import MainPage from './Components/Forum/MainPage'; // Import MainPage component (optional)
-import TopicDiscussions from './Components/Forum/TopicDiscussions';
-import Topics from './Components/Topics/topics'
+import Context from './Components/Context/Context';
+import ContextProvider from './Components/Context/ContextProvider';
+import SubforumList from './Components/SubforumList/SubforumList';
+import Post from './Components/Post/Post';
+import PostsList from './Components/PostsList/PostsList';
+import DiscussionView from './Components/DiscussionView/DiscussionView';
+import Topics from './Components/Topics/topics';
 
 const App = () => {
-  console.log("App component is being rendered.");
+  const [showMainContent, setShowMainContent] = useState(true); // Initial state
+
+  const handleTopicClick = () => {
+    setShowMainContent(false); // Hide main content on click
+  };
+
   return (
     <Router>
       <div>
-        <Navbar />
-        <Hero />
-        {/* <Browse /> */}  {/* Comment out if Browse is not meant for initial rendering */}
-        <MainPage />  {/* Assuming MainPage handles user authentication or doesn't require it */}
+        <Navbar onTopicClick={handleTopicClick} />
+        {showMainContent && ( // Conditionally render main content
+          <>
+            <Hero />
+            <Browse />
+          </>
+        )}
         <div className="container">
+          <ContextProvider>
+            <SubforumList />
+          </ContextProvider>
           <Routes>
-            <Route path="/" element={<Browse />} />  {/* Route for Browse component */}
-            <Route path="/topics" element={<Topics />} />  {/* Route for Topics component */}
+            <Route path="/" element={<><Hero /><Browse /></>} /> {/* Home route */}
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/topic/:topicName" element={<TopicDiscussions />} />
+            <Route path="/subforums/:subforumTitle" element={<DiscussionView />} />
+            <Route path="/topics" element={<Topics />} />
           </Routes>
         </div>
       </div>

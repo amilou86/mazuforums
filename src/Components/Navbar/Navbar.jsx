@@ -6,19 +6,19 @@ import MFlogo2 from '../../assets/MFlogo2.png'
 import MFlogo3 from '../../assets/MFlogo3.png'
 import soundwave1 from '../../assets/soundwave1.png'
 
-const Navbar = () => {
+const Navbar = ({ onTopicClick }) => {
     return (
-        <nav className='container'>
+        <nav className='container navbar'>
             <img src={MFlogo2} alt="logo" className='logo' />
             <ul>
                 <li>
                     <Link to="/">Home</Link>  {/* Link to the root path ("/") for Home */}
                 </li>
                 <li>
-                    <Link to="/">Browse</Link>
+                    <Link to="/Browse">Browse</Link>
                 </li>
                 <li>
-                    <Link to="/topics">Topics</Link>
+                    <Link to="/topics" onClick={onTopicClick}>Topics</Link>
 
                 </li>
                 <li><button className='btn'>Sign In</button></li>
