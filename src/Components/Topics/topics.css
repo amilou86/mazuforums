@@ -5,32 +5,3 @@ h1 {
     border: 1px solid #ddd;
     border-radius: 5px;
 }
-
-.topics li {
-    margin: 1rem 0;
-    padding: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background-color: #f5f5f5;
-    list-style: none;
-    display: flex;
-    /* Optional: Arrange title and link horizontally */
-    align-items: center;
-    /* Optional: Center content vertically */
-}
-
-.topics li a {
-    /* Styles for the link within each topic */
-    flex: 1;
-    /* Optional: Make link text take up available space */
-    text-decoration: none;
-    /* Remove underline from link */
-    color: #333;
-    /* Set link text color */
-}
-
-.topics li:hover {
-    /* Optional: Add hover effect */
-    background-color: #eee;
-    cursor: pointer;
-}

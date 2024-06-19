@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 
 const Topics = () => {
     const [rowData, setRowData] = useState([
@@ -22,40 +20,34 @@ const Topics = () => {
     };
 
     return (
-        <div className='forum-table' style={{ width: '100 % ', height: '100 % ' }} >
+        <div className='forum-table' style={{ width: '100%', height: '100%' }}>
             <h1>MazuForums Community Topics</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Community Topic</th>
-                        <th>Posts</th>
-                        <th>Latest</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {rowData.map((topic) => (
-                        <tr key={topic.Community}>
-                            <td>{topic.Community}</td>
-                            <td>{topic.Posts}</td>
-                            <td>{topic.Latest}</td>
+            <div className="container-fluid">
+                <table className='table table-bordered table-hover table-responsive'>
+                    <thead>
+                        <tr>
+                            <th style={{ width: '70%' }}>Community Topic</th>
+                            <th style={{ width: '15%' }}>Posts</th>
+                            <th style={{ width: '15%' }}>Latest</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
-            <ul>
-                {/* You can keep the topic list if needed */}
-                {/* {mockTopics.map((topic) => (
-          <li key={topic.title}>
-            <Link to={`/forum/${topic.title}`}>{topic.title}</Link>
-          </li>
-        ))} */}
-            </ul>
+                    </thead>
+                    <tbody>
+                        {rowData.map((topic) => (
+                            <tr key={topic.Community}>
+                                <td>{topic.Community}</td>
+                                <td>{topic.Posts}</td>
+                                <td>{topic.Latest}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
 
-            <form onSubmit={handleAddTopic}>
-                <input type="text" name="title" placeholder="New Topic Title" />
-                <button type="submit">Create Topic</button>
+            <form onSubmit={handleAddTopic} className="mt-3">
+                <input type="text" name="title" placeholder="New Topic Title" className="form-control" />
+                <button type="submit" className="btn btn-primary mt-2">Create Topic</button>
             </form>
-        </div >
+        </div>
     );
 };
 
