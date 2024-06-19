@@ -48,3 +48,7 @@ a {
   /* Lower z-index to potentially hide under SubforumList */
   /* Other styles for Navbar */
 }
+
+h1 {
+  color: #1D3557;
+}

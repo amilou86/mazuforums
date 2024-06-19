@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Topics = () => {
@@ -34,7 +35,11 @@ const Topics = () => {
                     <tbody>
                         {rowData.map((topic) => (
                             <tr key={topic.Community}>
-                                <td>{topic.Community}</td>
+                                <td>
+                                    <Link to={`/topic/${topic.Community}`}>
+                                        {topic.Community}
+                                    </Link>
+                                </td>
                                 <td>{topic.Posts}</td>
                                 <td>{topic.Latest}</td>
                             </tr>

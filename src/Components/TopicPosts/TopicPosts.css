@@ -1,0 +1,66 @@
+.post-list {
+    list-style-type: none;
+    /* Remove bullet points */
+    padding: 0;
+}
+
+.post-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 15px;
+    /* background-color: #D4EFF0; */
+}
+
+.post-title {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    color: #FCBF49;
+}
+
+.post-content {
+    padding: 10px 0;
+    /* border-bottom: 1px solid #ddd; */
+
+}
+
+.post-date {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 10px;
+    text-align: right;
+}
+
+.reply-item {
+    border: 1px solid #eee;
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.reply-content {
+    margin-bottom: 5px;
+
+}
+
+.reply-date {
+    color: #888;
+    font-size: 0.8em;
+}
+
+.reply-form {
+    margin-top: 10px;
+}
+
+.reply-form input[type="text"] {
+    background-color: #D4EFF0;
+    /* Change background color as desired */
+    border: 1px solid #ccc;
+    /* Optional: Add a border for better visibility */
+    padding: 8px;
+    /* Optional: Add padding for better spacing */
+    border-radius: 5px;
+    /* Optional: Add border-radius for rounded corners */
+}
