@@ -5,8 +5,8 @@ import './TopicPosts.css';
 const TopicPosts = () => {
     const { topicName } = useParams();
     const [posts, setPosts] = useState([
-        { id: 1, title: "New Books", content: "My daughter's primary school needs new books, the current ones are old and out of date. When will they be replaced?", date: new Date().toLocaleString(), replies: [] },
-        { id: 2, title: "School Meals", content: "My son's high school serves very unhealthy meals, we need the menu to include healthier options", date: new Date().toLocaleString(), replies: [] },
+        { id: 1, title: "New Books", content: "My daughter's primary school needs new books, the current ones are old and out of date. When will they be replaced?", date: new Date().toLocaleString(), replies: [], likes: 0 },
+        { id: 2, title: "School Meals", content: "My son's high school serves very unhealthy meals, we need the menu to include healthier options", date: new Date().toLocaleString(), replies: [], likes: 0 },
     ]);
 
     const [newPost, setNewPost] = useState({ title: '', content: '' });
@@ -38,6 +38,17 @@ const TopicPosts = () => {
         e.target.elements.replyContent.value = '';
     };
 
+    const handleLike = (postId) => {
+        const updatedPosts = posts.map(post => {
+            if (post.id === postId) {
+                return { ...post, likes: post.likes + 1 };
+            }
+            return post;
+        });
+        setPosts(updatedPosts);
+    };
+
+
     return (
         <div>
             <h1>{topicName} Discussions</h1>
@@ -46,6 +57,11 @@ const TopicPosts = () => {
                     <li key={post.id} className="post-item">
                         <h2 className="post-title">{post.title}</h2>
                         <p className="post-content">{post.content}</p>
+                        {/* Like button and count */}
+                        <div className="post-likes">
+                            <button onClick={() => handleLike(post.id)}>Like</button>
+                            <span>{post.likes} {post.likes === 1 ? 'like' : 'likes'}</span>
+                        </div>
                         <div className="post-date">Posted on {post.date}</div> {/* Updated to div */}
                         <ul>
                             {post.replies.map((reply, index) => (
