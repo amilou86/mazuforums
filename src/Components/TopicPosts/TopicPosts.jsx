@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './TopicPosts.css';
+import { FaHeart } from 'react-icons/fa'; // Importing the FaHeart icon
 
 const TopicPosts = () => {
     const { topicName } = useParams();
@@ -19,6 +20,7 @@ const TopicPosts = () => {
             content: newPost.content,
             date: new Date().toLocaleString(),
             replies: [],
+            likes: 0
         };
         setPosts([...posts, newPostData]);
         setNewPost({ title: '', content: '' });
@@ -48,7 +50,6 @@ const TopicPosts = () => {
         setPosts(updatedPosts);
     };
 
-
     return (
         <div>
             <h1>{topicName} Discussions</h1>
@@ -57,20 +58,22 @@ const TopicPosts = () => {
                     <li key={post.id} className="post-item">
                         <h2 className="post-title">{post.title}</h2>
                         <p className="post-content">{post.content}</p>
-                        {/* Like button and count */}
-                        <div className="post-likes">
-                            <button onClick={() => handleLike(post.id)}>Like</button>
-                            <span>{post.likes} {post.likes === 1 ? 'like' : 'likes'}</span>
-                        </div>
-                        <div className="post-date">Posted on {post.date}</div> {/* Updated to div */}
+                        <div className="post-date">Posted on {post.date}</div>
                         <ul>
                             {post.replies.map((reply, index) => (
                                 <li key={index} className="reply-item">
                                     <p className="reply-content">{reply.content}</p>
-                                    <div className="reply-date">Replied on {reply.date}</div> {/* Updated to div */}
+                                    <div className="reply-date">Replied on {reply.date}</div>
                                 </li>
                             ))}
                         </ul>
+                        {/* Replace 'Like' text with React Icons */}
+                        <div className="post-likes">
+                            <button onClick={() => handleLike(post.id)}>
+                                <FaHeart /> {/* Using the FaHeart icon */}
+                            </button>
+                            <span>{post.likes} {post.likes === 1 ? 'like' : 'likes'}</span>
+                        </div>
                         <form onSubmit={(e) => handleReplySubmit(e, post.id)} className="reply-form">
                             <input type="text" name="replyContent" placeholder="Reply to this post" className="form-control" />
                             <button type="submit" className="btn btn-secondary mt-2">Reply</button>
