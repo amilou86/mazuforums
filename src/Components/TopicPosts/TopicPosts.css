@@ -64,3 +64,27 @@
     border-radius: 5px;
     /* Optional: Add border-radius for rounded corners */
 }
+
+.likes-count {
+    color: #0077b6;
+    /* Change this to any color you want */
+    font-weight: bold;
+    /* Optional: Make the text bold */
+}
+
+.back-button {
+    background-color: #007bff;
+    /* Change this to your desired background color */
+    color: #ffffff;
+    /* Change this to your desired text color */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.back-button:hover {
+    background-color: #0056b3;
+    /* Optional: Change background color on hover */
+}
