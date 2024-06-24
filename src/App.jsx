@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './Components/Navbar/Navbar';
 import Hero from './Components/Hero/Hero';
-import Browse from './Components/Browse/Browse'; // Import Browse component
+import Browse from './Components/Browse/Browse';
 import SignIn from './Components/SignIn/SignIn';
 import SignUp from './Components/SignUp/SignUp';
-import TopicPosts from './Components/TopicPosts/TopicPosts';
-import Topics from './Components/Topics/topics'
+import Topics from './Components/Topics/topics';
+import TopicPosts from './Components/TopicPosts/TopicPosts'; // Import TopicPosts component
 
 const App = () => {
   const [showMainContent, setShowMainContent] = useState(true); // Initial state

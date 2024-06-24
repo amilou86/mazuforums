@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './TopicPosts.css';
 import { FaHeart } from 'react-icons/fa';
+import CreatePostModal from '../CreatePostModal/CreatePostModal';
 
 const TopicPosts = () => {
     const { topicName } = useParams();
@@ -11,21 +12,11 @@ const TopicPosts = () => {
         { id: 2, title: "School Meals", content: "My son's high school serves very unhealthy meals, we need the menu to include healthier options", date: new Date().toLocaleString(), replies: [], likes: 0, likedBy: [] },
     ]);
 
-    const [newPost, setNewPost] = useState({ title: '', content: '' });
+    const [showModal, setShowModal] = useState(false); // State to control modal visibility
 
-    const handlePostSubmit = (e) => {
-        e.preventDefault();
-        const newPostData = {
-            id: posts.length + 1,
-            title: newPost.title,
-            content: newPost.content,
-            date: new Date().toLocaleString(),
-            replies: [],
-            likes: 0,
-            likedBy: []
-        };
+    const handlePostSubmit = (newPostData) => {
         setPosts([...posts, newPostData]);
-        setNewPost({ title: '', content: '' });
+        setShowModal(false); // Close modal after submitting post
     };
 
     const handleReplySubmit = (e, postId) => {
@@ -64,12 +55,16 @@ const TopicPosts = () => {
         navigate('/topics');
     };
 
+    const handleClickCreatePost = () => {
+        setShowModal((prevShowModal) => !prevShowModal); // Toggle modal visibility
+    };
+
     return (
         <div>
             <h1>{topicName} Discussions</h1>
             <div className="d-flex justify-content-between mb-3">
                 <button onClick={handleBackToTopics} className="btn-custom-back">Back to Topics</button>
-                <a href="#create-post-form" className="btn-custom-create">Create New Post</a>
+                <button onClick={handleClickCreatePost} className="btn-custom-create">Create New Post</button>
             </div>
             <ul className="post-list">
                 {posts.map(post => (
@@ -99,24 +94,13 @@ const TopicPosts = () => {
                 ))}
             </ul>
 
-            <form id="create-post-form" onSubmit={handlePostSubmit} className="mt-3">
-                <input
-                    type="text"
-                    name="title"
-                    placeholder="Post Title"
-                    className="form-control"
-                    value={newPost.title}
-                    onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
+            {showModal && (
+                <CreatePostModal
+                    isOpen={showModal}
+                    onClose={() => setShowModal(false)}
+                    onSubmit={handlePostSubmit}
                 />
-                <textarea
-                    name="content"
-                    placeholder="Post Content"
-                    className="form-control mt-2"
-                    value={newPost.content}
-                    onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
-                ></textarea>
-                <button type="submit" className="btn-custom-submit mt-2">Create Post</button>
-            </form>
+            )}
         </div>
     );
 };
