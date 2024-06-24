@@ -1,6 +1,5 @@
 .post-list {
     list-style-type: none;
-    /* Remove bullet points */
     padding: 0;
 }
 
@@ -9,82 +8,102 @@
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 15px;
-    /* background-color: #D4EFF0; */
+
 }
 
 .post-title {
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 5px;
-    margin-bottom: 10px;
-    color: #FCBF49;
+    color: #f0ad4e;
 }
 
 .post-content {
-    padding: 10px 0;
-    /* border-bottom: 1px solid #ddd; */
-
+    color: #008CBA;
 }
 
-.post-date {
-    color: #666;
-    font-size: 0.9em;
-    margin-bottom: 10px;
-    text-align: right;
-}
-
-.reply-item {
-    border: 1px solid #eee;
-    padding: 5px;
-    margin-bottom: 5px;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-}
-
-.reply-content {
-    margin-bottom: 5px;
-
-}
-
-.reply-date {
-    color: #888;
-    font-size: 0.8em;
-}
-
-.reply-form {
-    margin-top: 10px;
-}
-
-.reply-form input[type="text"] {
-    background-color: #D4EFF0;
-    /* Change background color as desired */
-    border: 1px solid #ccc;
-    /* Optional: Add a border for better visibility */
-    padding: 8px;
-    /* Optional: Add padding for better spacing */
-    border-radius: 5px;
-    /* Optional: Add border-radius for rounded corners */
-}
-
-.likes-count {
-    color: #0077b6;
-    /* Change this to any color you want */
-    font-weight: bold;
-    /* Optional: Make the text bold */
-}
-
-.back-button {
-    background-color: #007bff;
-    /* Change this to your desired background color */
-    color: #ffffff;
-    /* Change this to your desired text color */
+.btn-custom-back {
+    background-color: #007bb5;
+    color: white;
     border: none;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
     border-radius: 5px;
+    transition: background-color 0.3s;
 }
 
-.back-button:hover {
-    background-color: #0056b3;
-    /* Optional: Change background color on hover */
+.btn-custom-back:hover {
+    background-color: #45a049;
+}
+
+.btn-custom-create {
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn-custom-create:hover {
+    background-color: #007bb5;
+
+}
+
+.btn-custom-like {
+    background-color: #FF5733;
+
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn-custom-like:hover {
+    background-color: #e64a19;
+
+}
+
+.btn-custom-reply {
+    background-color: #f0ad4e;
+    /* Light Orange */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn-custom-reply:hover {
+    background-color: #ec971f;
+
+}
+
+.btn-custom-submit {
+    background-color: #007bb5;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn-custom-submit:hover {
+    background-color: #31b0d5;
+
+}
+
+.post-date,
+.reply-date {
+    color: #666;
+    font-size: 0.8em;
+    margin-bottom: 10px;
+    text-align: right;
 }
