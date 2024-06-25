@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -14,15 +14,55 @@ const Topics = () => {
     const navigate = useNavigate();
     const fromBrowse = location.state?.from === 'browse';
 
+    const [posts, setPosts] = useState([]); // State to store fetched posts data
+
+    useEffect(() => {
+        // Simulate fetching posts for the selected topic on component mount or topic change
+        const selectedTopic = location.pathname.split('/')[2]; // Extract topic name from URL
+        const fetchPosts = async () => {
+            try {
+                const response = await fetch(`/api/posts/${selectedTopic}`); // Replace with actual API endpoint
+                if (!response.ok) {
+                    throw new Error('Failed to fetch posts');
+                }
+                const fetchedPosts = await response.json();
+                setPosts(fetchedPosts); // Update state with fetched posts
+            } catch (error) {
+                console.error('Error fetching posts:', error);
+            }
+        };
+        if (selectedTopic) {
+            fetchPosts();
+        }
+    }, [location.pathname]); // Re-run effect on pathname change
+
     const handleAddTopic = (e) => {
         e.preventDefault();
+        const title = e.target.title.value.trim(); // Trimmed title value
+        if (!title) {
+            alert('Please enter a topic title.'); // Show alert if title is empty
+            return;
+        }
         const newTopic = {
-            Community: e.target.title.value,
+            Community: title, // Use trimmed title
             Posts: 0,
             Latest: 'No posts yet',
         };
         setRowData([...rowData, newTopic]);
         e.target.title.value = ''; // Clear input field after submission
+    };
+
+    const handleTopicClick = async (topicName) => {
+        try {
+            const response = await fetch(`/api/posts/${topicName}`); // Replace with actual API endpoint
+            if (!response.ok) {
+                throw new Error('Failed to fetch posts');
+            }
+            const fetchedPosts = await response.json();
+            navigate(`/topic/${topicName}`, { state: { posts: fetchedPosts } });
+        } catch (error) {
+            console.error('Error fetching posts:', error);
+        }
     };
 
     return (
@@ -51,7 +91,7 @@ const Topics = () => {
                         {rowData.map((topic) => (
                             <tr key={topic.Community}>
                                 <td>
-                                    <Link to={`/topic/${topic.Community}`}>
+                                    <Link to={`/topic/${topic.Community}`} onClick={() => handleTopicClick(topic.Community)}>
                                         {topic.Community}
                                     </Link>
                                 </td>
@@ -61,7 +101,6 @@ const Topics = () => {
                         ))}
                     </tbody>
                 </table>
-
             </div>
         </div>
     );
