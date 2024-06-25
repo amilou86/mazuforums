@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './CreatePostModal.css'
+import './CreatePostModal.css';
 
 const CreatePostModal = ({ isOpen, onClose, onSubmit }) => {
     const [newPost, setNewPost] = useState({ title: '', content: '' });

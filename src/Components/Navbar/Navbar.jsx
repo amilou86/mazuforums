@@ -1,32 +1,27 @@
-import React from 'react'
-import { Link } from 'react-router-dom' // Import Link component
-import './Navbar.css'
-import MFlogo from '../../assets/MFlogo1.png'
-import MFlogo2 from '../../assets/MFlogo2.png'
-import MFlogo3 from '../../assets/MFlogo3.png'
-import soundwave1 from '../../assets/soundwave1.png'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './Navbar.css';
+import MFlogo2 from '../../assets/MFlogo2.png';
 
-const Navbar = ({ onTopicClick }) => {
+const Navbar = ({ onNavLinkClick }) => {
     return (
         <nav className='container navbar'>
             <img src={MFlogo2} alt="logo" className='logo' />
             <ul>
                 <li>
-                    <Link to="/">Home</Link>  {/* Link to the root path ("/") for Home */}
+                    <Link to="/" onClick={() => onNavLinkClick('home')}>Home</Link>
                 </li>
+                {/* <li>
+                    <Link to="/browse" onClick={() => onNavLinkClick('browse')}>Browse</Link>
+                </li> */}
                 <li>
-                    <Link to="/Browse">Browse</Link>
-                </li>
-                <li>
-                    <Link to="/topics" onClick={onTopicClick}>Topics</Link>
-
+                    <Link to="/topics" onClick={() => onNavLinkClick('topics')}>Topics</Link>
                 </li>
                 <li><button className='btn'>Sign In</button></li>
                 <li><button className='btn'>Sign Up</button></li>
             </ul>
-
         </nav>
-    )
-}
+    );
+};
 
-export default Navbar
+export default Navbar;

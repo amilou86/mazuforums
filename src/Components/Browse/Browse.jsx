@@ -9,7 +9,7 @@ import { SlEnergy } from "react-icons/sl";
 import { Link } from 'react-router-dom'; // Import Link for routing
 
 const Browse = () => {
-    const topics = [ // Define topics data within Browse component
+    const topics = [
         { id: 1, title: "Health", image: health, icon: <SiWorldhealthorganization /> },
         { id: 2, title: "Education", image: education, icon: <IoSchoolOutline /> },
         { id: 3, title: "Energy", image: energy, icon: <SlEnergy /> },
@@ -33,7 +33,7 @@ const Browse = () => {
                     </div>
                 ))}
             </div>
-        </div>
+        </div >
     );
 }
 

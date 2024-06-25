@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './TopicPosts.css';
 import { FaHeart } from 'react-icons/fa';
 import CreatePostModal from '../CreatePostModal/CreatePostModal';
 
-const TopicPosts = () => {
+const TopicPosts = ({ posts, setPosts }) => {
     const { topicName } = useParams();
     const navigate = useNavigate();
-    const [posts, setPosts] = useState([
-        { id: 1, title: "New Books", content: "My daughter's primary school needs new books, the current ones are old and out of date. When will they be replaced?", date: new Date().toLocaleString(), replies: [], likes: 0, likedBy: [] },
-        { id: 2, title: "School Meals", content: "My son's high school serves very unhealthy meals, we need the menu to include healthier options", date: new Date().toLocaleString(), replies: [], likes: 0, likedBy: [] },
-    ]);
+    const [filteredPosts, setFilteredPosts] = useState([]);
 
-    const [showModal, setShowModal] = useState(false); // State to control modal visibility
+    useEffect(() => {
+        // Filter posts based on the topic name
+        const topicPosts = posts.filter(post => post.topic === topicName);
+        setFilteredPosts(topicPosts);
+    }, [topicName, posts]);
 
     const handlePostSubmit = (newPostData) => {
-        setPosts([...posts, newPostData]);
-        setShowModal(false); // Close modal after submitting post
+        setPosts([...posts, { ...newPostData, topic: topicName }]);
     };
 
     const handleReplySubmit = (e, postId) => {
@@ -55,6 +55,12 @@ const TopicPosts = () => {
         navigate('/topics');
     };
 
+    const handleBackToBrowse = () => {
+        navigate('/browse');
+    };
+
+    const [showModal, setShowModal] = useState(false); // State to control modal visibility
+
     const handleClickCreatePost = () => {
         setShowModal((prevShowModal) => !prevShowModal); // Toggle modal visibility
     };
@@ -64,10 +70,11 @@ const TopicPosts = () => {
             <h1>{topicName} Discussions</h1>
             <div className="d-flex justify-content-between mb-3">
                 <button onClick={handleBackToTopics} className="btn-custom-back">Back to Topics</button>
+                <button onClick={handleBackToBrowse} className="btn-custom-back">Back to Browse</button>
                 <button onClick={handleClickCreatePost} className="btn-custom-create">Create New Post</button>
             </div>
             <ul className="post-list">
-                {posts.map(post => (
+                {filteredPosts.map(post => (
                     <li key={post.id} className="post-item">
                         <h2 className="post-title">{post.title}</h2>
                         <p className="post-content">{post.content}</p>
