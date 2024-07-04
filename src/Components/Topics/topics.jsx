@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import './topics.css';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import './topics.css'; // Ensure correct CSS import path
 import topic1 from '../../assets/topic1.png';
 import topic2 from '../../assets/topic2.png';
 import topic3 from '../../assets/topic3.png';
@@ -16,77 +16,54 @@ import education from '../../assets/education.png';
 import energy from '../../assets/energy.png';
 
 const Topics = () => {
-    const topicImages = [
-        topic1,
-        topic2,
-        topic3,
-        topic4,
-        topic5,
-        topic6,
-        topic7,
-        topic8,
-        topic9,
-        topic10,
-        health,
-        education,
-        energy
-    ];
-
-    const [usedImages, setUsedImages] = useState([]);
-    const [rowData, setRowData] = useState([
-        { Community: 'Education', Posts: 25, image: null },
-        { Community: 'Energy', Posts: 5, image: null },
-        { Community: 'Health', Posts: 55, image: null },
-        { Community: 'Transport', Posts: 5, image: null },
-    ]);
-
-    const getRandomImage = () => {
-        if (usedImages.length >= topicImages.length) {
-            setUsedImages([]);
-        }
-        let availableImages = topicImages.filter(img => !usedImages.includes(img));
-        const randomIndex = Math.floor(Math.random() * availableImages.length);
-        const selectedImage = availableImages[randomIndex];
-        setUsedImages([...usedImages, selectedImage]);
-        return selectedImage;
+    const topicImages = {
+        'Education': education,
+        'Energy': energy,
+        'Health': health,
+        'Transport': topic1,
+        'Human Rights': topic7,
+        'Tourism': topic8,
+        'Digital Rights': topic9,
+        'Agriculture': topic5,
+        'Economy': topic6,
+        // Add a default image or handle the missing image case
+        'defaultImage': topic10,
     };
 
-    useEffect(() => {
-        setRowData(prevRowData => prevRowData.map(topic => ({
-            ...topic,
-            image: topic.image || getRandomImage(),
-        })));
-    }, []);
+    const [rowData, setRowData] = useState([
+        { Community: 'Education', Posts: 0, Latest: 'post title and date', image: topicImages['Education'] },
+        { Community: 'Energy', Posts: 5, Latest: 'post title and date', image: topicImages['Energy'] },
+        { Community: 'Health', Posts: 55, Latest: 'post title and date', image: topicImages['Health'] },
+        { Community: 'Transport', Posts: 5, Latest: 'post title and date', image: topicImages['Transport'] },
+        { Community: 'Human Rights', Posts: 0, Latest: 'post title and date', image: topicImages['Human Rights'] },
+        { Community: 'Tourism', Posts: 5, Latest: 'post title and date', image: topicImages['Tourism'] },
+        { Community: 'Digital Rights', Posts: 500, Latest: 'post title and date', image: topicImages['Digital Rights'] },
+        { Community: 'Agriculture', Posts: 5, Latest: 'post title and date', image: topicImages['Agriculture'] },
+        { Community: 'Economy', Posts: 5, Latest: 'post title and date', image: topicImages['Economy'] },
+    ]);
 
     const navigate = useNavigate();
 
     const handleAddTopic = (e) => {
         e.preventDefault();
-        const title = e.target.title.value.trim(); // Trimmed title value
+        const title = e.target.title.value.trim();
         if (!title) {
-            alert('Please enter a topic title.'); // Show alert if title is empty
+            alert('Please enter a topic title.');
             return;
         }
+        const image = topicImages[title] || topicImages['defaultImage'];
         const newTopic = {
-            Community: title, // Use trimmed title
+            Community: title,
             Posts: 0,
-            image: getRandomImage(), // Assign randomly selected image
+            Latest: 'No posts yet',
+            image: image,
         };
         setRowData([...rowData, newTopic]);
-        e.target.title.value = ''; // Clear input field after submission
+        e.target.title.value = '';
     };
 
-    const handleTopicClick = async (topicName) => {
-        try {
-            const response = await fetch(`/api/posts/${topicName}`); // Replace with actual API endpoint
-            if (!response.ok) {
-                throw new Error('Failed to fetch posts');
-            }
-            const fetchedPosts = await response.json();
-            navigate(`/topic/${topicName}`, { state: { posts: fetchedPosts } });
-        } catch (error) {
-            console.error('Error fetching posts:', error);
-        }
+    const handleTopicClick = (topicName) => {
+        navigate(`/topic/${topicName}`);
     };
 
     return (
@@ -103,9 +80,9 @@ const Topics = () => {
                     </div>
                 </form>
 
-                <div className="row">
+                <div className="row topic-row">
                     {rowData.map((topic, index) => (
-                        <div key={index} className="col-lg-3 col-md-4 col-sm-6">
+                        <div key={index} className="col-lg-3 col-md-4 col-sm-6 mb-4 topic-column">
                             <div className="card" style={{ backgroundImage: `url(${topic.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
                                 <Link to={`/topic/${topic.Community}`} onClick={() => handleTopicClick(topic.Community)}>
                                     <div className="card-body">

@@ -1,5 +1,3 @@
-// App.js
-
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './Components/Navbar/Navbar';
@@ -7,9 +5,10 @@ import Hero from './Components/Hero/Hero';
 import Browse from './Components/Browse/Browse';
 import SignIn from './Components/SignIn/SignIn';
 import SignUp from './Components/SignUp/SignUp';
-import Topics from './Components/Topics/topics'; // Correct import path
+import Topics from './Components/Topics/topics';
 import TopicPosts from './Components/TopicPosts/TopicPosts';
-import SignUpModal from './Components/SignUpModal/SignUpModal'; // Import SignUpModal component
+import SignUpModal from './Components/SignUpModal/SignUpModal';
+import PostDetails from './Components/PostDetails/PostDetails'
 
 const App = () => {
   const [showSignUpModal, setShowSignUpModal] = useState(false); // State for SignUpModal visibility
@@ -31,15 +30,10 @@ const App = () => {
             <Route path="/" element={<Hero />} />
             <Route path="/browse" element={<Browse />} />
             <Route path="/topics" element={<Topics />} />
-            <Route
-              path="/topic/:topicName"
-              element={<TopicPosts posts={posts} setPosts={setPosts} />}
-            />
+            <Route path="/topic/:topicName" element={<TopicPosts />} />
+            <Route path="/topic/:topicName/post/:postId" element={<PostDetails />} />
             <Route path="/signin" element={<SignIn />} />
-            <Route
-              path="/signup"
-              element={<SignUp onSignUp={handleSignUp} />}
-            />
+            <Route path="/signup" element={<SignUp onSignUp={handleSignUp} />} />
           </Routes>
         </div>
         <SignUpModal
