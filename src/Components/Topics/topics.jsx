@@ -26,8 +26,16 @@ const Topics = () => {
         'Digital Rights': topic9,
         'Agriculture': topic5,
         'Economy': topic6,
+        'Domestic Violence': topic4,
+        'Water': topic2,
+        'Child Abuse': topic8,
+        'Child Defilement': topic2,
+        'Marriages': topic3,
+        'Info': topic5,
+        'Data': topic8,
         // Add a default image or handle the missing image case
         'defaultImage': topic10,
+
     };
 
     const [rowData, setRowData] = useState([
@@ -40,6 +48,13 @@ const Topics = () => {
         { Community: 'Digital Rights', Posts: 500, Latest: 'post title and date', image: topicImages['Digital Rights'] },
         { Community: 'Agriculture', Posts: 5, Latest: 'post title and date', image: topicImages['Agriculture'] },
         { Community: 'Economy', Posts: 5, Latest: 'post title and date', image: topicImages['Economy'] },
+        { Community: 'Domestic & Gender Violence', Posts: 5, Latest: 'post title and date', image: topicImages['Domestic Violence'] },
+        { Community: 'Child Abuse', Posts: 5, Latest: 'post title and date', image: topicImages['Education'] },
+        { Community: 'Child Defilement', Posts: 5, Latest: 'post title and date', image: topicImages['Child Defilement'] },
+        { Community: 'Online Abuse & Grooming', Posts: 5, Latest: 'post title and date', image: topicImages['Health'] },
+        { Community: 'Early Marriages', Posts: 5, Latest: 'post title and date', image: topicImages['Marriages'] },
+        { Community: 'Access to Information', Posts: 5, Latest: 'post title and date', image: topicImages['Info'] },
+        { Community: 'Data Protection', Posts: 5, Latest: 'post title and date', image: topicImages['Data'] },
     ]);
 
     const navigate = useNavigate();
