@@ -107,3 +107,17 @@
     margin-bottom: 10px;
     text-align: right;
 }
+
+
+.btn-secondary {
+    margin-bottom: 20px;
+    background-color: #6c757d;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}

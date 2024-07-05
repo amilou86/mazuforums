@@ -8,11 +8,11 @@ import SignUp from './Components/SignUp/SignUp';
 import Topics from './Components/Topics/topics';
 import TopicPosts from './Components/TopicPosts/TopicPosts';
 import SignUpModal from './Components/SignUpModal/SignUpModal';
-import PostDetails from './Components/PostDetails/PostDetails'
+import PostDetails from './Components/PostDetails/PostDetails';
+import { PostProvider } from './Components/Context/PostContext';
 
 const App = () => {
   const [showSignUpModal, setShowSignUpModal] = useState(false); // State for SignUpModal visibility
-  const [posts, setPosts] = useState([]); // State to store posts data
 
   const handleSignUp = (userData) => {
     // Handle sign-up logic here (e.g., send data to backend)
@@ -22,27 +22,29 @@ const App = () => {
   };
 
   return (
-    <Router>
-      <div>
-        <Navbar onSignUpClick={() => setShowSignUpModal(true)} />
-        <div className="container">
-          <Routes>
-            <Route path="/" element={<Hero />} />
-            <Route path="/browse" element={<Browse />} />
-            <Route path="/topics" element={<Topics />} />
-            <Route path="/topic/:topicName" element={<TopicPosts />} />
-            <Route path="/topic/:topicName/post/:postId" element={<PostDetails />} />
-            <Route path="/signin" element={<SignIn />} />
-            <Route path="/signup" element={<SignUp onSignUp={handleSignUp} />} />
-          </Routes>
+    <PostProvider>
+      <Router>
+        <div>
+          <Navbar onSignUpClick={() => setShowSignUpModal(true)} />
+          <div className="container">
+            <Routes>
+              <Route path="/" element={<Hero />} />
+              <Route path="/browse" element={<Browse />} />
+              <Route path="/topics" element={<Topics />} />
+              <Route path="/topic/:topicName" element={<TopicPosts />} />
+              <Route path="/topic/:topicName/post/:postId" element={<PostDetails />} />
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/signup" element={<SignUp onSignUp={handleSignUp} />} />
+            </Routes>
+          </div>
+          <SignUpModal
+            isOpen={showSignUpModal}
+            onClose={() => setShowSignUpModal(false)}
+            onSignUp={handleSignUp}
+          />
         </div>
-        <SignUpModal
-          isOpen={showSignUpModal}
-          onClose={() => setShowSignUpModal(false)}
-          onSignUp={handleSignUp}
-        />
-      </div>
-    </Router>
+      </Router>
+    </PostProvider>
   );
 };
 

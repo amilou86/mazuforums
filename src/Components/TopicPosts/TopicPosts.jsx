@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './TopicPosts.css';
 
@@ -10,7 +10,6 @@ const TopicPosts = () => {
     const dummyPosts = {
         Education: [
             { id: 1, title: 'New Books', content: "Our children's schools need new text books...", date: '2023-01-01' },
-
         ],
         Health: [
             { id: 1, title: 'Hospital Beds', content: 'There are not enough beds in the hospitals...', date: '2023-02-01' },
@@ -23,8 +22,13 @@ const TopicPosts = () => {
         navigate(`/topic/${topicName}/post/${postId}`);
     };
 
+    const handleBackToTopics = () => {
+        navigate('/topics');
+    };
+
     return (
         <div>
+            <button onClick={handleBackToTopics} className="btn btn-secondary">Back to Topics</button>
             <h1>{topicName} Discussions</h1>
             <ul className="post-list">
                 {dummyPosts[topicName].map(post => (
