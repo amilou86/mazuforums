@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './topics.css'; // Ensure correct CSS import path
+import './topics.css';
 import topic1 from '../../assets/topic1.png';
 import topic2 from '../../assets/topic2.png';
 import topic3 from '../../assets/topic3.png';

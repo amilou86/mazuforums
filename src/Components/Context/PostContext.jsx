@@ -11,11 +11,10 @@ export const PostProvider = ({ children }) => {
                 content: "Our children's schools need new text books, are they going to be replaced soon?",
                 date: '2023-01-01',
                 replies: [
-                    { id: 1, content: 'This is very important!', date: '2023-01-02' },
-                    { id: 2, content: 'Agreed!', date: '2023-01-03' }
+                    { id: 1, content: 'This is very important!', date: '2023-01-02', reactions: {} },
+                    { id: 2, content: 'Agreed!', date: '2023-01-03', reactions: {} }
                 ],
-                likes: 5,
-                likedBy: ['user1', 'user2']
+                reactions: {}
             },
             // Add more posts for Education
         ],
@@ -26,10 +25,9 @@ export const PostProvider = ({ children }) => {
                 content: 'There are not enough beds in the hospitals, we urgently need more.',
                 date: '2023-02-01',
                 replies: [
-                    { id: 1, content: 'We also need the sheets and pillows replaced more often.', date: '2023-02-02' },
+                    { id: 1, content: 'We also need the sheets and pillows replaced more often.', date: '2023-02-02', reactions: {} },
                 ],
-                likes: 3,
-                likedBy: ['user3']
+                reactions: {}
             },
             {
                 id: 2,
@@ -37,10 +35,9 @@ export const PostProvider = ({ children }) => {
                 content: "There are not enough appointments available in a reasonable time, we need access to medical treatment without a long wait.",
                 date: '2024-06-26',
                 replies: [
-                    { id: 1, content: "I agree, we need more doctors and nurses so we can be treated when we need it", date: '2024-06-30' }
+                    { id: 1, content: "I agree, we need more doctors and nurses so we can be treated when we need it", date: '2024-06-30', reactions: {} }
                 ],
-                likes: 5,
-                likedBy: ['user5']
+                reactions: {}
             }
         ],
         // Add more topics with their posts here

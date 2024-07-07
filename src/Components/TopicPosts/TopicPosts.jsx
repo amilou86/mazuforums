@@ -1,22 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './TopicPosts.css';
+import CreatePostModal from '../CreatePostModal/CreatePostModal';
+import { usePosts } from '../Context/PostContext'; // Adjust the import path if necessary
 
 const TopicPosts = () => {
     const { topicName } = useParams();
     const navigate = useNavigate();
+    const { postsData, setPostsData } = usePosts();
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    // Dummy posts data for different topics
-    const dummyPosts = {
-        Education: [
-            { id: 1, title: 'New Books', content: "Our children's schools need new text books...", date: '2023-01-01' },
-        ],
-        Health: [
-            { id: 1, title: 'Hospital Beds', content: 'There are not enough beds in the hospitals...', date: '2023-02-01' },
-            { id: 2, title: 'Appointment Waiting Times', content: "There are not enough appointments available...", date: '2024-06-26' }
-        ],
-        // Add more topics with posts here
-    };
+    const posts = postsData[topicName] || [];
 
     const handlePostClick = (postId) => {
         navigate(`/topic/${topicName}/post/${postId}`);
@@ -26,19 +20,35 @@ const TopicPosts = () => {
         navigate('/topics');
     };
 
+    const handleCreatePost = () => {
+        setIsModalOpen(true);
+    };
+
+    const handlePostSubmit = (newPost) => {
+        const updatedPosts = [...posts, newPost];
+        setPostsData({ ...postsData, [topicName]: updatedPosts });
+        setIsModalOpen(false);
+    };
+
     return (
         <div>
             <button onClick={handleBackToTopics} className="btn btn-secondary">Back to Topics</button>
             <h1>{topicName} Discussions</h1>
-            <ul className="post-list">
-                {dummyPosts[topicName].map(post => (
-                    <li key={post.id} className="post-item" onClick={() => handlePostClick(post.id)}>
-                        <h2 className="post-title">{post.title}</h2>
-                        <p className="post-content">{post.content}</p>
-                        <div className="post-date">Posted on {post.date}</div>
-                    </li>
-                ))}
-            </ul>
+            <button onClick={handleCreatePost} className="btn btn-primary">Create Post</button>
+            <CreatePostModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onSubmit={handlePostSubmit} />
+            {posts.length > 0 ? (
+                <ul className="post-list">
+                    {posts.map(post => (
+                        <li key={post.id} className="post-item" onClick={() => handlePostClick(post.id)}>
+                            <h2 className="post-title">{post.title}</h2>
+                            <p className="post-content">{post.content}</p>
+                            <div className="post-date">Posted on {post.date}</div>
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <p>No posts available for this topic.</p>
+            )}
         </div>
     );
 };
