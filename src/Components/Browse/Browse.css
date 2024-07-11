@@ -1,5 +1,7 @@
 .browse {
-    padding: 20px;
+    padding: 0;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .browse-header {
@@ -17,9 +19,7 @@
 .topicsbrowse {
     position: relative;
     width: 200px;
-    /* Adjust as needed */
     height: 200px;
-    /* Adjust as needed */
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

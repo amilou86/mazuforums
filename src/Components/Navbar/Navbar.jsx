@@ -23,26 +23,29 @@ const Navbar = ({ onNavLinkClick }) => {
     };
 
     return (
-        <nav className='container navbar'>
-            <img src={MFlogo2} alt="logo" className='logo' />
-            <ul>
-                <li>
-                    <Link to="/" onClick={() => onNavLinkClick('home')}>Home</Link>
-                </li>
-                <li>
-                    <Link to="/topics" onClick={() => onNavLinkClick('topics')}>Topics</Link>
-                </li>
-                <li>
-                    <button className='btn' onClick={() => setShowSignUpModal(true)}>Sign Up</button>
-                </li>
-                {/* Add a button for Sign In */}
-                <li>
-                    <button className='btn' onClick={handleSignInClick}>Sign In</button>
-                </li>
-            </ul>
-            <SignUpModal isOpen={showSignUpModal} onClose={() => setShowSignUpModal(false)} onSignUp={handleSignUp} />
-            <SignInModal isOpen={showSignInModal} onClose={() => setShowSignInModal(false)} />
-        </nav>
+        <div className="full-width-container">
+            <nav className='container navbar'>
+                <img src={MFlogo2} alt="logo" className='logo' />
+                <ul>
+                    <li>
+                        <Link to="/" onClick={() => onNavLinkClick('home')}>Home</Link>
+                    </li>
+                    <li>
+                        <Link to="/topics" onClick={() => onNavLinkClick('topics')}>Topics</Link>
+                    </li>
+                    <li>
+                        <button className='btn' onClick={() => setShowSignUpModal(true)}>Sign Up</button>
+                    </li>
+                    {/* Add a button for Sign In */}
+                    <li>
+                        <button className='btn' onClick={handleSignInClick}>Sign In</button>
+                    </li>
+                </ul>
+                <SignUpModal isOpen={showSignUpModal} onClose={() => setShowSignUpModal(false)} onSignUp={handleSignUp} />
+                <SignInModal isOpen={showSignInModal} onClose={() => setShowSignInModal(false)} />
+            </nav>
+        </div>
+
     );
 };
 
