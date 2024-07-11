@@ -27,6 +27,8 @@ nav ul li {
 }
 
 .full-width-container {
+    width: 100%;
+    /* Set width to 100% */
     padding: 0;
     margin: 0;
 }
