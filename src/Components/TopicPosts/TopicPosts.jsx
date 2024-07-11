@@ -7,7 +7,8 @@ import { usePosts } from '../Context/PostContext'; // Adjust the import path if 
 const TopicPosts = () => {
     const { topicName } = useParams();
     const navigate = useNavigate();
-    const { postsData, setPostsData } = usePosts();
+    // const { postsData, setPostsData } = usePosts();
+    const { postsData } = usePosts();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const posts = postsData[topicName] || [];

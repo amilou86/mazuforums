@@ -1,88 +1,141 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './Browse.css';
+import { usePosts } from '../Context/PostContext';
 import health from '../../assets/health.png';
 import education from '../../assets/education.png';
 import energy from '../../assets/energy.png';
-import { SiWorldhealthorganization } from "react-icons/si";
-import { IoSchoolOutline } from "react-icons/io5";
-import { SlEnergy } from "react-icons/sl";
-import { Link } from 'react-router-dom';
+import topic1 from '../../assets/topic1.png';
+import topic2 from '../../assets/topic2.png';
+import topic3 from '../../assets/topic3.png';
+import topic4 from '../../assets/topic4.png';
+import topic5 from '../../assets/topic5.png';
+import topic6 from '../../assets/topic6.png';
+import topic7 from '../../assets/topic7.png';
+import topic8 from '../../assets/topic8.png';
+import topic9 from '../../assets/topic9.png';
+import topic10 from '../../assets/topic10.png';
 
 const Browse = () => {
+    const { postsData } = usePosts();
     const [mostPopular, setMostPopular] = useState(null);
     const [mostRecent, setMostRecent] = useState(null);
-    const [hottestPost, setHottestPost] = useState(null);
+    const [hottest, setHottest] = useState(null);
+
+    const topicImages = {
+        'Education': education,
+        'Energy': energy,
+        'Health': health,
+        'Transport': topic1,
+        'Human Rights': topic7,
+        'Tourism': topic8,
+        'Digital Rights': topic9,
+        'Agriculture': topic5,
+        'Economy': topic6,
+        'Domestic and Gender Violence': topic4,
+        'Child Abuse': topic8,
+        'Child Defilement': topic2,
+        'Online Abuse & Grooming': topic10,
+        'Early Marriages': topic3,
+        'Access to Information': topic5,
+        'Data Protection': topic8,
+        'defaultImage': topic10,
+    };
 
     useEffect(() => {
-        // Dummy data
-        const topics = [
-            { id: 1, title: "Health", image: health, posts: 25, replies: 50, latestPostDate: '2023-06-20', icon: <SiWorldhealthorganization /> },
-            { id: 2, title: "Education", image: education, posts: 30, replies: 45, latestPostDate: '2023-06-25', icon: <IoSchoolOutline /> },
-            { id: 3, title: "Energy", image: energy, posts: 20, replies: 30, latestPostDate: '2023-06-22', icon: <SlEnergy /> },
-        ];
+        console.log("Posts Data in Browse: ", postsData);
+        if (postsData) {
+            let popularTopic = null;
+            let recentTopic = null;
+            let hottestTopic = null;
 
-        const posts = [
-            { id: 1, title: "Health Post", topic: "Health", likes: 100, date: '2023-06-20', image: health },
-            { id: 2, title: "Education Post", topic: "Education", likes: 150, date: '2023-06-25', image: education },
-            { id: 3, title: "Energy Post", topic: "Energy", likes: 120, date: '2023-06-22', image: energy },
-        ];
+            let maxPosts = -1;
+            let latestDate = new Date(0);
+            let maxLikes = -1;
 
-        // Determine most popular topic
-        const popularTopic = topics.reduce((prev, current) => (prev.posts + prev.replies > current.posts + current.replies) ? prev : current);
+            Object.keys(postsData).forEach(topic => {
+                console.log(`Processing topic: ${topic}, Posts:`, postsData[topic]);
 
-        // Determine most recent topic
-        const recentTopic = topics.reduce((prev, current) => (new Date(prev.latestPostDate) > new Date(current.latestPostDate)) ? prev : current);
+                // Determine the most popular topic by number of posts
+                if (postsData[topic].length > maxPosts) {
+                    maxPosts = postsData[topic].length;
+                    popularTopic = topic;
+                }
 
-        // Determine hottest post
-        const hottest = posts.reduce((prev, current) => (prev.likes > current.likes) ? prev : current);
+                // Determine the most recent topic by the latest post date
+                const latestPostInTopic = postsData[topic].reduce((latest, post) => {
+                    return new Date(post.date) > new Date(latest.date) ? post : latest;
+                }, { date: new Date(0) });
 
-        setMostPopular(popularTopic);
-        setMostRecent(recentTopic);
-        setHottestPost(hottest);
-    }, []);
+                if (new Date(latestPostInTopic.date) > latestDate) {
+                    latestDate = new Date(latestPostInTopic.date);
+                    recentTopic = topic;
+                }
+
+                // Determine the hottest topic by the most likes
+                const hottestPostInTopic = postsData[topic].reduce((max, post) => post.likes > max.likes ? post : max, { likes: -1 });
+
+                if (hottestPostInTopic.likes > maxLikes) {
+                    maxLikes = hottestPostInTopic.likes;
+                    hottestTopic = topic;
+                }
+            });
+
+            console.log("Most Popular Topic:", popularTopic);
+            console.log("Most Recent Topic:", recentTopic);
+            console.log("Hottest Topic:", hottestTopic);
+
+            setMostPopular(popularTopic);
+            setMostRecent(recentTopic);
+            setHottest(hottestTopic);
+        }
+    }, [postsData]);
+
+    const getTopicImage = (topic) => {
+        return topicImages[topic] || topicImages['defaultImage'];
+    };
 
     return (
         <div className='browse'>
             <div className='browse-header'>
                 <h1>Browse Topics</h1>
             </div>
-            <div className="topics-container">
-                {mostPopular && (
-                    <div className="topicsbrowse">
-                        <Link to={`/topic/${mostPopular.title}`}>
-                            <img src={mostPopular.image} alt={`${mostPopular.title} topic image`} />
-                            <div className="caption">
-                                {mostPopular.icon}
-                                <p>Most Popular: {mostPopular.title}</p>
-                            </div>
-                        </Link>
-                    </div>
-                )}
-                {mostRecent && (
-                    <div className="topicsbrowse">
-                        <Link to={`/topic/${mostRecent.title}`}>
-                            <img src={mostRecent.image} alt={`${mostRecent.title} topic image`} />
-                            <div className="caption">
-                                {mostRecent.icon}
-                                <p>Most Recent: {mostRecent.title}</p>
-                            </div>
-                        </Link>
-                    </div>
-                )}
-                {hottestPost && (
-                    <div className="topicsbrowse">
-                        <Link to={`/post/${hottestPost.id}`}>
-                            <img src={hottestPost.image} alt={`${hottestPost.title} post image`} />
-                            <div className="caption">
-                                <SlEnergy />
-                                <p>Hottest Post: {hottestPost.title}</p>
-                            </div>
-                        </Link>
-                    </div>
-                )}
-            </div>
+            {postsData && (
+                <div className="topics-container">
+                    {mostPopular && (
+                        <div className="topicsbrowse" key={mostPopular}>
+                            <Link to={`/topic/${mostPopular}`}>
+                                <img src={getTopicImage(mostPopular)} alt={`${mostPopular} topic image`} />
+                                <div className="caption">
+                                    <p>Most Popular Topic: {mostPopular}</p>
+                                </div>
+                            </Link>
+                        </div>
+                    )}
+                    {mostRecent && (
+                        <div className="topicsbrowse" key={mostRecent}>
+                            <Link to={`/topic/${mostRecent}`}>
+                                <img src={getTopicImage(mostRecent)} alt={`${mostRecent} topic image`} />
+                                <div className="caption">
+                                    <p>Most Recent Topic: {mostRecent}</p>
+                                </div>
+                            </Link>
+                        </div>
+                    )}
+                    {hottest && (
+                        <div className="topicsbrowse" key={hottest}>
+                            <Link to={`/topic/${hottest}`}>
+                                <img src={getTopicImage(hottest)} alt={`${hottest} topic image`} />
+                                <div className="caption">
+                                    <p>Hottest Topic: {hottest}</p>
+                                </div>
+                            </Link>
+                        </div>
+                    )}
+                </div>
+            )}
         </div>
     );
-}
+};
 
 export default Browse;

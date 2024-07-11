@@ -12,12 +12,10 @@ import PostDetails from './Components/PostDetails/PostDetails';
 import { PostProvider } from './Components/Context/PostContext';
 
 const App = () => {
-  const [showSignUpModal, setShowSignUpModal] = useState(false); // State for SignUpModal visibility
+  const [showSignUpModal, setShowSignUpModal] = useState(false);
 
   const handleSignUp = (userData) => {
-    // Handle sign-up logic here (e.g., send data to backend)
     console.log('Sign Up Data:', userData);
-    // Simulated success message
     alert(`User ${userData.username} signed up successfully!`);
   };
 

@@ -15,7 +15,7 @@ import health from '../../assets/health.png';
 import education from '../../assets/education.png';
 import energy from '../../assets/energy.png';
 
-const Topics = () => {
+const Topics = ({ setPostsData }) => {
     const topicImages = {
         'Education': education,
         'Energy': energy,
@@ -35,7 +35,6 @@ const Topics = () => {
         'Data': topic8,
         // Add a default image or handle the missing image case
         'defaultImage': topic10,
-
     };
 
     const [rowData, setRowData] = useState([
@@ -48,7 +47,7 @@ const Topics = () => {
         { Community: 'Digital Rights', Posts: 500, Latest: 'post title and date', image: topicImages['Digital Rights'] },
         { Community: 'Agriculture', Posts: 5, Latest: 'post title and date', image: topicImages['Agriculture'] },
         { Community: 'Economy', Posts: 5, Latest: 'post title and date', image: topicImages['Economy'] },
-        { Community: 'Domestic & Gender Violence', Posts: 5, Latest: 'post title and date', image: topicImages['Domestic Violence'] },
+        { Community: 'Domestic and Gender Violence', Posts: 5, Latest: 'post title and date', image: topicImages['Domestic Violence'] },
         { Community: 'Child Abuse', Posts: 5, Latest: 'post title and date', image: topicImages['Education'] },
         { Community: 'Child Defilement', Posts: 5, Latest: 'post title and date', image: topicImages['Child Defilement'] },
         { Community: 'Online Abuse & Grooming', Posts: 5, Latest: 'post title and date', image: topicImages['Health'] },
@@ -75,6 +74,16 @@ const Topics = () => {
         };
         setRowData([...rowData, newTopic]);
         e.target.title.value = '';
+
+        // Update postsData in parent component using the setter function passed as prop
+        const updatedPostsData = {
+            ...rowData.reduce((acc, topic) => {
+                acc[topic.Community] = [];
+                return acc;
+            }, {}),
+            [title]: [],
+        };
+        setPostsData(updatedPostsData);
     };
 
     const handleTopicClick = (topicName) => {
