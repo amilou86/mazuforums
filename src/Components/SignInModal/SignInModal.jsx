@@ -1,30 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './SignInModal.css';
 
+// Ensure the /api/signin endpoint is correctly set up on your backend to handle the POST request with the username and password, and that it returns a proper response indicating success or failure of the sign-in attempt.
+
 const SignInModal = ({ isOpen, onClose, onSignIn }) => {
-    // State variables to store user input
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission behavior
 
-        // Simulated backend check (replace with actual backend integration)
-        if (username === 'exampleuser' && password === 'Password1') {
-            // Simulated successful sign-in
-            onSignIn(username);
-            onClose(); // Close the modal after successful sign-in
-            setUsername('');
-            setPassword('');
-            setError('');
-        } else {
+        try {
+            const response = await axios.post('/api/signin', {
+                username,
+                password
+            });
+
+            // Assuming the backend sends back a user object or a success message
+            if (response.status === 200) {
+                onSignIn(username); // Call the onSignIn callback with the username
+                onClose(); // Close the modal after successful sign-in
+                setUsername('');
+                setPassword('');
+                setError('');
+            }
+        } catch (err) {
             setError('Incorrect username or password.'); // Show error message for incorrect credentials
         }
     };
 
-    // Clear input fields whenever the modal opens/closes (using useEffect)
-    React.useEffect(() => {
+    useEffect(() => {
         setUsername('');
         setPassword('');
         setError('');

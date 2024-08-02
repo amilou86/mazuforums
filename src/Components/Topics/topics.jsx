@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './topics.css';
 import topic1 from '../../assets/topic1.png';
 import topic2 from '../../assets/topic2.png';
@@ -14,6 +15,8 @@ import topic10 from '../../assets/topic10.png';
 import health from '../../assets/health.png';
 import education from '../../assets/education.png';
 import energy from '../../assets/energy.png';
+
+// Ensure backend has endpoints set up to handle GET /api/topics and POST /api/topics requests.
 
 const Topics = ({ setPostsData }) => {
     const topicImages = {
@@ -33,32 +36,27 @@ const Topics = ({ setPostsData }) => {
         'Marriages': topic3,
         'Info': topic5,
         'Data': topic8,
-        // Add a default image or handle the missing image case
         'defaultImage': topic10,
     };
 
-    const [rowData, setRowData] = useState([
-        { Community: 'Education', Posts: 0, Latest: 'post title and date', image: topicImages['Education'] },
-        { Community: 'Energy', Posts: 5, Latest: 'post title and date', image: topicImages['Energy'] },
-        { Community: 'Health', Posts: 55, Latest: 'post title and date', image: topicImages['Health'] },
-        { Community: 'Transport', Posts: 5, Latest: 'post title and date', image: topicImages['Transport'] },
-        { Community: 'Human Rights', Posts: 0, Latest: 'post title and date', image: topicImages['Human Rights'] },
-        { Community: 'Tourism', Posts: 5, Latest: 'post title and date', image: topicImages['Tourism'] },
-        { Community: 'Digital Rights', Posts: 500, Latest: 'post title and date', image: topicImages['Digital Rights'] },
-        { Community: 'Agriculture', Posts: 5, Latest: 'post title and date', image: topicImages['Agriculture'] },
-        { Community: 'Economy', Posts: 5, Latest: 'post title and date', image: topicImages['Economy'] },
-        { Community: 'Domestic and Gender Violence', Posts: 5, Latest: 'post title and date', image: topicImages['Domestic Violence'] },
-        { Community: 'Child Abuse', Posts: 5, Latest: 'post title and date', image: topicImages['Education'] },
-        { Community: 'Child Defilement', Posts: 5, Latest: 'post title and date', image: topicImages['Child Defilement'] },
-        { Community: 'Online Abuse & Grooming', Posts: 5, Latest: 'post title and date', image: topicImages['Health'] },
-        { Community: 'Early Marriages', Posts: 5, Latest: 'post title and date', image: topicImages['Marriages'] },
-        { Community: 'Access to Information', Posts: 5, Latest: 'post title and date', image: topicImages['Info'] },
-        { Community: 'Data Protection', Posts: 5, Latest: 'post title and date', image: topicImages['Data'] },
-    ]);
-
+    const [rowData, setRowData] = useState([]);
     const navigate = useNavigate();
 
-    const handleAddTopic = (e) => {
+    useEffect(() => {
+        // Fetch topics from the backend on component mount
+        const fetchTopics = async () => {
+            try {
+                const response = await axios.get('/api/topics');
+                setRowData(response.data);
+            } catch (error) {
+                console.error('Error fetching topics:', error);
+            }
+        };
+
+        fetchTopics();
+    }, []);
+
+    const handleAddTopic = async (e) => {
         e.preventDefault();
         const title = e.target.title.value.trim();
         if (!title) {
@@ -72,18 +70,27 @@ const Topics = ({ setPostsData }) => {
             Latest: 'No posts yet',
             image: image,
         };
-        setRowData([...rowData, newTopic]);
-        e.target.title.value = '';
 
-        // Update postsData in parent component using the setter function passed as prop
-        const updatedPostsData = {
-            ...rowData.reduce((acc, topic) => {
-                acc[topic.Community] = [];
-                return acc;
-            }, {}),
-            [title]: [],
-        };
-        setPostsData(updatedPostsData);
+        try {
+            // Send the new topic to the backend
+            const response = await axios.post('/api/topics', newTopic);
+
+            // Update local state with the new topic
+            setRowData([...rowData, response.data]);
+            e.target.title.value = '';
+
+            // Update postsData in parent component using the setter function passed as prop
+            const updatedPostsData = {
+                ...rowData.reduce((acc, topic) => {
+                    acc[topic.Community] = [];
+                    return acc;
+                }, {}),
+                [title]: [],
+            };
+            setPostsData(updatedPostsData);
+        } catch (error) {
+            console.error('Error adding topic:', error);
+        }
     };
 
     const handleTopicClick = (topicName) => {

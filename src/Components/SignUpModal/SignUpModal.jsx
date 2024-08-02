@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import './SignUpModal.css'; // Import CSS for styling
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './SignUpModal.css';
+
+// Make sure backend is set up to handle the /api/signup endpoint and responds with appropriate status codes and messages.
 
 const SignUpModal = ({ isOpen, onClose, onSignUp }) => {
-    // State variables to store user input
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -11,7 +13,7 @@ const SignUpModal = ({ isOpen, onClose, onSignUp }) => {
     const [error, setError] = useState('');
     const [passwordError, setPasswordError] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission behavior
 
         // Validate inputs (check if any field is empty)
@@ -35,20 +37,23 @@ const SignUpModal = ({ isOpen, onClose, onSignUp }) => {
             password,
         };
 
-        // Call the provided `onSignUp` function (simulate sending data to backend)
-        onSignUp(userData);
+        try {
+            const response = await axios.post('/api/signup', userData);
 
-        // Close the modal after successful submission (assuming backend handles success)
-        onClose();
-
-        // Clear input fields after submission or error
-        setFirstName('');
-        setLastName('');
-        setEmail('');
-        setUsername('');
-        setPassword('');
-        setError('');
-        setPasswordError('');
+            if (response.status === 201) { // Assuming 201 Created status for successful sign-up
+                onSignUp(userData); // Call the onSignUp callback with the user data
+                onClose(); // Close the modal after successful sign-up
+                setFirstName('');
+                setLastName('');
+                setEmail('');
+                setUsername('');
+                setPassword('');
+                setError('');
+                setPasswordError('');
+            }
+        } catch (err) {
+            setError('Sign-up failed. Please try again.');
+        }
     };
 
     // Password validation function
@@ -57,8 +62,7 @@ const SignUpModal = ({ isOpen, onClose, onSignUp }) => {
         return regex.test(password);
     };
 
-    // Clear input fields whenever the modal opens/closes (using useEffect)
-    React.useEffect(() => {
+    useEffect(() => {
         setFirstName('');
         setLastName('');
         setEmail('');

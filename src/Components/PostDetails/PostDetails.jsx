@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './PostDetails.css';
 import { FaThumbsUp, FaHeart, FaRegLaugh, FaSadTear, FaThumbsDown } from 'react-icons/fa';
 import { usePosts } from '../Context/PostContext';
+
+// Ensure backend has the necessary endpoints set up to handle GET, PATCH, and POST requests for posts and replies.
 
 const PostDetails = () => {
     const { topicName, postId } = useParams();
@@ -12,64 +15,80 @@ const PostDetails = () => {
     const [newReplyContent, setNewReplyContent] = useState('');
 
     useEffect(() => {
-        const topicPosts = postsData[topicName] || [];
-        const selectedPost = topicPosts.find(p => p.id === parseInt(postId));
-        setPost(selectedPost);
-    }, [topicName, postId, postsData]);
+        // Fetch post details from the backend on component mount
+        const fetchPost = async () => {
+            try {
+                const response = await axios.get(`/api/topics/${topicName}/posts/${postId}`);
+                setPost(response.data);
+            } catch (error) {
+                console.error('Error fetching post:', error);
+            }
+        };
 
-    const handleReaction = (type) => {
+        fetchPost();
+    }, [topicName, postId]);
+
+    const handleReaction = async (type) => {
         const userId = "user123"; // Example user ID
 
         // Check if the user has already reacted with a different emoji
-        if (post.reactions[userId] && post.reactions[userId] !== type) {
-            const updatedReactions = { ...post.reactions, [userId]: type };
-            const updatedPost = { ...post, reactions: updatedReactions };
+        const updatedReactions = { ...post.reactions, [userId]: type };
+        const updatedPost = { ...post, reactions: updatedReactions };
+
+        try {
+            // Send the updated reactions to the backend
+            await axios.patch(`/api/topics/${topicName}/posts/${postId}/reactions`, { reactions: updatedReactions });
             updatePostInContext(updatedPost);
-        } else if (!post.reactions[userId]) { // If user has not reacted before
-            const updatedReactions = { ...post.reactions, [userId]: type };
-            const updatedPost = { ...post, reactions: updatedReactions };
-            updatePostInContext(updatedPost);
+        } catch (error) {
+            console.error('Error updating reaction:', error);
         }
     };
 
-    const handleReplyReaction = (replyId, type) => {
+    const handleReplyReaction = async (replyId, type) => {
         const userId = "user123"; // Example user ID
         const updatedReplies = post.replies.map(reply => {
             if (reply.id === replyId) {
-                // Check if the user has already reacted with a different emoji
-                if (reply.reactions[userId] && reply.reactions[userId] !== type) {
-                    const updatedReactions = { ...reply.reactions, [userId]: type };
-                    return { ...reply, reactions: updatedReactions };
-                } else if (!reply.reactions[userId]) { // If user has not reacted before
-                    const updatedReactions = { ...reply.reactions, [userId]: type };
-                    return { ...reply, reactions: updatedReactions };
-                }
+                const updatedReactions = { ...reply.reactions, [userId]: type };
+                return { ...reply, reactions: updatedReactions };
             }
             return reply;
         });
 
         const updatedPost = { ...post, replies: updatedReplies };
-        updatePostInContext(updatedPost);
+
+        try {
+            // Send the updated reply reactions to the backend
+            await axios.patch(`/api/topics/${topicName}/posts/${postId}/replies/${replyId}/reactions`, { reactions: updatedPost.reactions });
+            updatePostInContext(updatedPost);
+        } catch (error) {
+            console.error('Error updating reply reaction:', error);
+        }
     };
 
-    const handleAddReply = (e) => {
+    const handleAddReply = async (e) => {
         e.preventDefault();
         if (newReplyContent.trim() === '') {
             alert('Please enter a reply.');
             return;
         }
         const newReply = {
-            id: post.replies.length + 1,
             content: newReplyContent.trim(),
             date: new Date().toISOString().split('T')[0],
             reactions: {}
         };
-        const updatedPost = {
-            ...post,
-            replies: [...post.replies, newReply]
-        };
-        updatePostInContext(updatedPost);
-        setNewReplyContent('');
+
+        try {
+            // Send the new reply to the backend
+            const response = await axios.post(`/api/topics/${topicName}/posts/${postId}/replies`, newReply);
+            const updatedPost = {
+                ...post,
+                replies: [...post.replies, response.data]
+            };
+            updatePostInContext(updatedPost);
+            setNewReplyContent('');
+        } catch (error) {
+            console.error('Error adding reply:', error);
+        }
     };
 
     const updatePostInContext = (updatedPost) => {
