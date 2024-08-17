@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './topics.css';
+
 import topic1 from '../../../assets/topic1.png';
 import topic2 from '../../../assets/topic2.png';
 import topic3 from '../../../assets/topic3.png';
@@ -64,26 +64,21 @@ const Topics = ({ setPostsData }) => {
     };
 
     return (
-        <div className="logo text-4xl font-bold mt-40 text-center" style={{ fontFamily: "Outfit, sans-serif", color: "#023e8a" }}>
+        <div id="topics" className="text-4xl font-bold mt-20 text-center" style={{ fontFamily: "Outfit, sans-serif", color: "#023e8a" }}>
             <h1>MAZUFORUMS Community Topics</h1>
 
             <div className="container-fluid mt-10">
                 <div className="row topic-row mt-10">
                     {rowData.map((topic, index) => (
-                        <div key={index} className="col-lg-3 col-md-4 col-sm-6 mb-4 topic-column">
+                        <div key={index} className="col-lg-3 col-md-4 col-sm-6 mb-4">
                             <div
-                                className="card"
-                                style={{
-                                    backgroundImage: `url(${topic.image})`,
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center',
-                                    cursor: 'pointer',
-                                }}
+                                className="card cursor-pointer rounded-lg overflow-hidden bg-cover bg-center shadow-md hover:shadow-lg transition duration-300 ease-in-out aspect-square" // Aspect ratio for square shape
+                                style={{ backgroundImage: `url(${topic.image})` }}
                                 onClick={() => handleTopicClick(topic.Community)}
                             >
-                                <div className="card-body">
-                                    <h5 className="card-title">{topic.Community}</h5>
-                                    <p className="card-text">Posts: {topic.Posts}</p>
+                                <div className="card-body py-4 px-6 text-[#023047]">
+                                    <h5 className="card-title text-xl font-bold">{topic.Community}</h5>
+                                    <p className="card-text text-base">Posts: {topic.Posts}</p>
                                 </div>
                             </div>
                         </div>
@@ -95,3 +90,4 @@ const Topics = ({ setPostsData }) => {
 };
 
 export default Topics;
+

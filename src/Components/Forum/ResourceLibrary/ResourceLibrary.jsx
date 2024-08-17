@@ -4,7 +4,7 @@ import { useScroll, useTransform, motion } from "framer-motion";
 export const ResourceLibrary = () => {
     return (
         <>
-            <div className="relative h-fit bg-indigo-50">
+            <div id="resource" className="relative h-fit bg-indigo-50">
                 <Features />
             </div>
         </>

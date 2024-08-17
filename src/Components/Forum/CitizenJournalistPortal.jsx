@@ -30,7 +30,7 @@ const CitizenJournalistPortal = () => {
         <section className="w-full px-8 py-12 grid grid-cols-1 md:grid-cols-2 items-center gap-8 max-w-6xl mx-auto">
             <div>
                 <span className="block mb-4 text-xs md:text-sm text-indigo-500 font-medium">
-                    The Power of The People
+                    The Power of People - Citizen Journalist Portal
                 </span>
                 <h3 className="text-4xl md:text-6xl font-semibold">
                     Let's change it up
@@ -43,7 +43,7 @@ const CitizenJournalistPortal = () => {
                     onClick={handleJoinClick}  // Link button to handleJoinClick function
                     className="bg-indigo-500 text-white font-medium py-2 px-4 rounded transition-all hover:bg-indigo-600 active:scale-95"
                 >
-                    Join the movement
+                    Become a citizen journalist
                 </button>
             </div>
             <ShuffleGrid />
