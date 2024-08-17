@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import CreatePostModal from '../CreatePostModal/CreatePostModal';
 import { usePosts } from '../../Forum/Context/PostContext.jsx';
-import ReplySection from '../Replies/ReplySection.jsx'
+import ReplySection from '../Replies/ReplySection.jsx';
 
 const reactionsList = ["👍", "❤️", "😂", "😮", "😢", "👏"];
 
@@ -73,12 +73,14 @@ const TopicPosts = () => {
 
     return (
         <div id="topic-posts" className="flex flex-col mt-4 px-4">
-            <button
-                onClick={handleBackToTopics}
-                className="bg-gray-400 text-white py-2 px-4 rounded-md hover:bg-gray-500 mb-4"
-            >
-                Back to Topics
-            </button>
+            <div className="flex justify-center mb-4">
+                <button
+                    onClick={handleBackToTopics}
+                    className="bg-gray-400 text-white py-2 px-4 rounded-md hover:bg-gray-500"
+                >
+                    Back to Topics
+                </button>
+            </div>
             <div className="flex flex-col items-center mt-4">
                 <h1 className="text-2xl font-bold mb-4" style={{ color: '#023e8a', fontFamily: 'Outfit, sans-serif' }}>
                     {topicName} Discussions

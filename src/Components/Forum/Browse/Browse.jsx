@@ -94,10 +94,13 @@ const Browse = () => {
 
     return (
         <div className='browse'>
-            <div className='browse-header'>
-                <h1>Browse Topics</h1>
+            <div className='browse-header mb-10 mt-10'>
+                <h1 className="text-3xl">Browse Topics</h1>
             </div>
-            <div className="topics-container">
+            <div className='browse-description flex justify-center text-center'>
+                <h2 className='mb-5 text-center text-xl'>Check out the latest most liked, most recent and hottest topics!</h2>
+            </div>
+            <div className="topics-container pt-10 mb-20">
                 {mostPopular && (
                     <div className="topicsbrowse" key={mostPopular}>
                         <Link to={`/topic/${mostPopular}`}>
@@ -129,7 +132,7 @@ const Browse = () => {
                     </div>
                 )}
             </div>
-        </div>
+        </div >
     );
 };
 
