@@ -5,14 +5,14 @@ import { motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 import { useNavigate } from 'react-router-dom';  // Import useNavigate
 
-export const CJPSignIn = ({ onClose, onSignIn }) => {
-    const navigate = useNavigate();  // Initialize useNavigate
+const CJPSignIn = ({ onClose, onSignIn }) => {
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSignIn();  // Call the passed sign-in handler if needed
+        onSignIn();  // Close the modal after sign-in
 
-        // Navigate to the CJPHero and CJPNavbar components after successful sign-in
+        // Navigate to CJPHero component
         navigate('/cjportal');
     };
 
@@ -34,7 +34,6 @@ export const CJPSignIn = ({ onClose, onSignIn }) => {
                     className="relative z-10 mx-auto w-full max-w-xl"
                 >
                     <Heading />
-
                     <SocialOptions />
                     <Or />
                     <form onSubmit={handleSubmit}>

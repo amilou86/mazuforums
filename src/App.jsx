@@ -15,19 +15,18 @@ import TopicPosts from './Components/Forum/TopicPosts/TopicPosts.jsx';
 import PostDetails from './Components/Forum/PostDetails/PostDetails.jsx';
 import SignUp from './Components/Forum/SignUp/SignUp.jsx';
 import ResourceLibrary from './Components/Forum/ResourceLibrary/ResourceLibrary.jsx';
-import CitizenJournalistPortal from './Components/Forum/CitizenJournalistPortal.jsx';
 import FloatingBottomNav from './Components/Forum/FloatingBottomNav/FloatingBottomNav.jsx';
 import ScrollToTop from './Components/Forum/ScrollToTop.jsx';
-
+import CitizenJournalistPortal from './Components/Forum/CitizenJournalistPortal.jsx'
 // CJP Components
-import CJPNavbar from './Components/CitizenJournalistPortal/CJPNavbar.jsx';
 import CJPHero from './Components/CitizenJournalistPortal/CJPHero.jsx';
 
+// Layouts
 const ForumLayout = () => (
   <div>
     <Navbar />
     <Hero />
-    <Outlet /> {/* Place Outlet after Hero */}
+    <Outlet /> {/* This is where nested routes will be rendered */}
     <CitizenJournalistPortal />
     <FloatingBottomNav />
   </div>
@@ -35,9 +34,9 @@ const ForumLayout = () => (
 
 const CJPLayout = () => (
   <div>
-    <Outlet /> {/* Place Outlet first */}
-    <CJPNavbar />
-    <CJPHero />
+    <Navbar />
+    <Outlet /> {/* Render CJPHero here */}
+    <FloatingBottomNav />
   </div>
 );
 
@@ -59,11 +58,9 @@ const App = () => {
     <Router>
       <PostProvider>
         <ScrollToTop />
-        <Navbar />
         <Routes>
           {/* Forum Routes */}
           <Route path="/" element={<ForumLayout />}>
-            {/* Render both Browse and ResourceLibrary on the initial load */}
             <Route index element={
               <>
                 <Browse />
@@ -75,20 +72,16 @@ const App = () => {
             <Route path="/topic/:topicName" element={<TopicPosts />} />
             <Route path="/topic/:topicName/post/:postId" element={<PostDetails />} />
             <Route path="/signup" element={<SignUp />} />
-            {/* Keep ResourceLibrary accessible via /resource */}
             <Route path="/resource" element={<ResourceLibrary />} />
             <Route path="/cjpportal" element={<CitizenJournalistPortal />} />
           </Route>
 
           {/* Citizen Journalist Portal Routes */}
           <Route path="/cjportal" element={<CJPLayout />}>
-            {/* Add more routes for the CJP part here */}
+            <Route index element={<CJPHero />} />
+            {/* Add more routes for CJ Portal part here if needed */}
           </Route>
         </Routes>
-        <FloatingBottomNav
-          onSignInClick={() => setIsSignInOpen(true)}
-          onSignUpClick={() => setIsSignUpOpen(true)}
-        />
         {/* Modals */}
         <SignInModal
           isOpen={isSignInOpen}

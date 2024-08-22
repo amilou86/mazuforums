@@ -109,7 +109,7 @@ const Browse = () => {
     };
 
     return (
-        <div id="browse" className="scroll-pt-top mt-10 p-30">
+        <div id="browse" className="scroll-pt-top mpt-16">
         
             <div className='browse-header mb-10 mt-100'>
                 <h1 className="text-3xl">Browse Topics</h1>

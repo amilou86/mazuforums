@@ -20,10 +20,14 @@ import img16 from '../CJPassets/img16.png';
 import CJPSignIn from '../CitizenJournalistPortal/CJPSignIn.jsx'
 
 const CitizenJournalistPortal = () => {
-    const navigate = useNavigate();  // Initialize useNavigate
+    const [isSignInOpen, setIsSignInOpen] = useState(false);
 
     const handleJoinClick = () => {
-        navigate('/CJPsignin');  // Programmatically navigate to the SignIn component
+        setIsSignInOpen(true);  // Open the SignIn modal
+    };
+
+    const handleCloseModal = () => {
+        setIsSignInOpen(false);  // Close the SignIn modal
     };
 
     return (
@@ -47,6 +51,10 @@ const CitizenJournalistPortal = () => {
                 </button>
             </div>
             <ShuffleGrid />
+
+            {isSignInOpen && (
+                <CJPSignIn onClose={handleCloseModal} onSignIn={() => setIsSignInOpen(false)} />
+            )}
         </section>
     );
 };
