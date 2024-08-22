@@ -38,22 +38,22 @@ const Topics = ({ setPostsData }) => {
     };
 
     const [rowData, setRowData] = useState([
-        { Community: 'Education', Posts: 0, Latest: 'post title and date', image: topicImages['Education'] },
-        { Community: 'Energy', Posts: 5, Latest: 'post title and date', image: topicImages['Energy'] },
-        { Community: 'Health', Posts: 55, Latest: 'post title and date', image: topicImages['Health'] },
+        { Community: 'Education', Posts: 0, Latest: 'post title and date', image: topicImages['Transport'] },
+        { Community: 'Energy', Posts: 5, Latest: 'post title and date', image: topicImages['Transport'] },
+        { Community: 'Health', Posts: 55, Latest: 'post title and date', image: topicImages['Transport'] },
         { Community: 'Transport', Posts: 5, Latest: 'post title and date', image: topicImages['Transport'] },
-        { Community: 'Human Rights', Posts: 0, Latest: 'post title and date', image: topicImages['Human Rights'] },
-        { Community: 'Tourism', Posts: 5, Latest: 'post title and date', image: topicImages['Tourism'] },
-        { Community: 'Digital Rights', Posts: 500, Latest: 'post title and date', image: topicImages['Digital Rights'] },
-        { Community: 'Agriculture', Posts: 5, Latest: 'post title and date', image: topicImages['Agriculture'] },
-        { Community: 'Economy', Posts: 5, Latest: 'post title and date', image: topicImages['Economy'] },
-        { Community: 'Domestic and Gender Violence', Posts: 5, Latest: 'post title and date', image: topicImages['Domestic Violence'] },
-        { Community: 'Child Abuse', Posts: 5, Latest: 'post title and date', image: topicImages['Education'] },
-        { Community: 'Child Defilement', Posts: 5, Latest: 'post title and date', image: topicImages['Child Defilement'] },
-        { Community: 'Online Abuse & Grooming', Posts: 5, Latest: 'post title and date', image: topicImages['Health'] },
-        { Community: 'Early Marriages', Posts: 5, Latest: 'post title and date', image: topicImages['Marriages'] },
-        { Community: 'Access to Information', Posts: 5, Latest: 'post title and date', image: topicImages['Info'] },
-        { Community: 'Data Protection', Posts: 5, Latest: 'post title and date', image: topicImages['Data'] },
+        { Community: 'Human Rights', Posts: 0, Latest: 'post title and date', image: topicImages['Transport'] },
+        { Community: 'Tourism', Posts: 5, Latest: 'post title and date', image: topicImages['Transport'] },
+        { Community: 'Digital Rights', Posts: 500, Latest: 'post title and date', image: topicImages['Transport'] },
+        { Community: 'Agriculture', Posts: 5, Latest: 'post title and date', image: topicImages['Transport'] },
+        { Community: 'Economy', Posts: 5, Latest: 'post title and date', image: topicImages['Transport'] },
+        { Community: 'Domestic and Gender Violence', Posts: 5, Latest: 'post title and date', image: topicImages['Transport'] },
+        { Community: 'Child Abuse', Posts: 5, Latest: 'post title and date', image: topicImages['Transport'] },
+        { Community: 'Child Defilement', Posts: 5, Latest: 'post title and date', image: topicImages['Transport'] },
+        { Community: 'Online Abuse & Grooming', Posts: 5, Latest: 'post title and date', image: topicImages['Transport'] },
+        { Community: 'Early Marriages', Posts: 5, Latest: 'post title and date', image: topicImages['Transport'] },
+        { Community: 'Access to Information', Posts: 5, Latest: 'post title and date', image: topicImages['Transport'] },
+        { Community: 'Data Protection', Posts: 5, Latest: 'post title and date', image: topicImages['Transport'] },
     ]);
 
     const navigate = useNavigate();
@@ -77,8 +77,8 @@ const Topics = ({ setPostsData }) => {
                                 onClick={() => handleTopicClick(topic.Community)}
                             >
                                 <div className="card-body py-4 px-6 text-[#023047]">
-                                    <h5 className="card-title text-xl font-bold">{topic.Community}</h5>
-                                    <p className="card-text text-base">Posts: {topic.Posts}</p>
+                                    <h5 className="card-title text-4xl font-bold">{topic.Community}</h5>
+                                    <p className="card-text text-xl text-base">Posts: {topic.Posts}</p>
                                 </div>
                             </div>
                         </div>

@@ -16,6 +16,7 @@ import health from '../../../assets/health.png';
 import education from '../../../assets/education.png';
 import energy from '../../../assets/energy.png';
 
+
 const Browse = () => {
     const { postsData, isLoading } = usePosts();
     const [mostPopular, setMostPopular] = useState(null);
@@ -64,6 +65,21 @@ const Browse = () => {
         }
     }, [postsData]);
 
+  
+
+    // New useEffect for handling scroll position
+    useEffect(() => {
+        const hash = window.location.hash;
+        if (hash === "#browse") {
+            const element = document.getElementById("browse");
+            if (element) {
+                const yOffset = -100; // Adjust this offset based on your header height
+                const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                window.scrollTo({ top: y, behavior: 'smooth' });
+            }
+        }
+    }, []); // Empty dependency array to run this only on mount
+
     if (isLoading) {
         return <div>Loading...</div>;
     }
@@ -93,8 +109,9 @@ const Browse = () => {
     };
 
     return (
-        <div className='browse'>
-            <div className='browse-header mb-10 mt-10'>
+        <div id="browse" className="scroll-pt-top mt-10 p-30">
+        
+            <div className='browse-header mb-10 mt-100'>
                 <h1 className="text-3xl">Browse Topics</h1>
             </div>
             <div className='browse-description flex justify-center text-center'>

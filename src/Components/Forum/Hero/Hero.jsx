@@ -10,7 +10,7 @@ const Hero = () => {
     };
 
     return (
-        <div id="hero" className="h-screen bg-gradient-to-b from-blue-900 to-blue-700 flex items-center justify-center relative">
+        <div id="hero" className="h-screen bg-gradient-to-b from-blue-900 to-blue-700 flex items-center justify-center relative mb-30">
             <img src={backgroundImage} alt="Hero image" className="absolute top-0 left-0 w-full h-full object-cover" />
             <div className="text-center z-10">
                 <h1 className="text-6xl font-bold text-[#00B4D8]">MazuForums</h1>

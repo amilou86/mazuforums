@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import SignInModal from '../SignInModal/SignInModal.jsx';
 import SignUpModal from '../SignUpModal/SignUpModal.jsx';
 
+
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [isSignInOpen, setIsSignInOpen] = useState(false);
@@ -21,11 +22,14 @@ const Navbar = () => {
     return (
         <nav className="bg-white p-4 flex items-center justify-between fixed top-0 left-0 w-full z-50">
             <div className="flex items-center flex-grow">
-                <div className="logo text-lg font-bold" style={{ fontFamily: "Outfit, sans-serif", color: "#023e8a" }}>
+                <motion.div className="logo text-lg font-bold" style={{ fontFamily: "Outfit, sans-serif", color: "#023e8a" }}
+                // whileHover={{ scale: 1.05 }}
+                // whileTap={{ scale: 0.95 }}
+                whileHover={{ y: -15, scale: 1.05 }}
+                >
                     <Link to="/" className="text-lg font-bold">MAZUFORUMS</Link>
-                </div>
+                </motion.div>
             </div>
-
             <NavRight
                 setIsOpen={setIsOpen}
                 setIsSignInOpen={setIsSignInOpen}
@@ -45,32 +49,50 @@ const Navbar = () => {
             />
         </nav>
     );
+
 };
+
+
 
 const NavRight = ({ setIsOpen, setIsSignInOpen, setIsSignUpOpen }) => {
     return (
         <div className=" flex items-center flex-grow justify-end gap-6">
-            <button
+            <motion.button
+                  whileHover={{ y: -15, scale: 1.05 }}
                 className="block lg:hidden text-gray-950 text-2xl"
                 onClick={() => setIsOpen(prev => !prev)}
             >
                 <span>Menu</span>
-            </button>
-            <Link to="/topics" className="text-[#023e8a] hover:text-indigo-600">Topics</Link>
+            </motion.button>
+            <motion.button    whileHover={{ y: -15, scale: 1.05 }}
+    >
+            <Link to="/topics" className="text-[#023e8a] hover:text-indigo-600">Topics</Link> 
+            </motion.button>
+
+            <motion.button   whileHover={{ y: -15, scale: 1.05 }}>
             <Link to="/resource" className="text-[#023e8a] hover:text-indigo-600">Resource Library</Link>
-            <Link to="/cjportal" className="text-[#023e8a] hover:text-indigo-600">Citizen Journalist Portal</Link>
-            <button
+            </motion.button>
+
+            <motion.button  whileHover={{ y: -15, scale: 1.05 }}>
+            <Link to="/cjpportal" className="text-[#023e8a] hover:text-indigo-600">Citizen Journalist Portal</Link>
+            </motion.button>
+           
+           
+
+            <motion.button
+                whileHover={{ y: -15, scale: 1.05 }}
                 onClick={() => setIsSignInOpen(true)}
                 className="text-[#023e8a] hover:text-indigo-600"
             >
                 Sign In
-            </button>
-            <button
+            </motion.button>
+
+            <motion.button
+                  whileHover={{ y: -15, scale: 1.05 }}
                 onClick={() => setIsSignUpOpen(true)}
-                className="text-[#023e8a] hover:text-indigo-600"
-            >
+                className="text-[#023e8a] hover:text-indigo-600">
                 Sign Up
-            </button>
+            </motion.button>
         </div>
     );
 };

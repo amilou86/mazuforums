@@ -43,7 +43,7 @@ const CitizenJournalistPortal = () => {
                     onClick={handleJoinClick}  // Link button to handleJoinClick function
                     className="bg-indigo-500 text-white font-medium py-2 px-4 rounded transition-all hover:bg-indigo-600 active:scale-95"
                 >
-                    Become a citizen journalist
+                    Share a story now!
                 </button>
             </div>
             <ShuffleGrid />
@@ -91,12 +91,12 @@ const generateSquares = () => {
         <motion.div
             key={sq.id}
             layout
-            transition={{ duration: 1.5, type: "spring" }}
+            transition={{ duration: 1.5, type: "spring" }} // Removed the comma here
             className="relative w-full h-full"
             style={{
-                backgroundImage: `url(${sq.src})`,
+                backgroundImage: `url(${sq.src})`, // Fixed the template literal syntax
                 backgroundSize: "cover",
-            }}
+            }} // Removed the comma here
         ></motion.div>
     ));
 };

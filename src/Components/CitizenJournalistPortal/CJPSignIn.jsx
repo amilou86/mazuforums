@@ -3,12 +3,17 @@ import { SiGithub, SiTwitter } from "react-icons/si";
 import { FiArrowLeft } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
+import { useNavigate } from 'react-router-dom';  // Import useNavigate
 
 export const CJPSignIn = ({ onClose, onSignIn }) => {
+    const navigate = useNavigate();  // Initialize useNavigate
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Simulate sign-in success
-        onSignIn();
+        onSignIn();  // Call the passed sign-in handler if needed
+
+        // Navigate to the CJPHero and CJPNavbar components after successful sign-in
+        navigate('/cjportal');
     };
 
     return (
