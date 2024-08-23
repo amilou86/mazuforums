@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaSearch, FaRegNewspaper, FaImage, FaVideo, FaDownload } from 'react-icons/fa';
 import { FiThumbsUp } from 'react-icons/fi';
-import SearchKeyword from './SearchKeyword.jsx';
+import SearchKeyword from './SearchKeyword.jsx'; 
 import { formatDateTimeInCAT } from '../../utils/dateUtils';
 
 const CJPHero = () => {
@@ -10,14 +10,18 @@ const CJPHero = () => {
         image: false,
         video: false,
     });
-    const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modal visibility
     const [comments, setComments] = useState({
         story: [],
         image: [],
         video: [],
     });
-    const [newComment, setNewComment] = useState('');
-    const [activePost, setActivePost] = useState(null); // State to manage which post is being commented on
+    const [newComment, setNewComment] = useState({
+        story: '',
+        image: '',
+        video: '',
+    });
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [username] = useState('currentUsername'); // Placeholder username
 
     const handleLike = (type) => {
         setLikes((prevLikes) => ({
@@ -26,20 +30,36 @@ const CJPHero = () => {
         }));
     };
 
-    const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
+    const handleCommentChange = (type, event) => {
+        setNewComment({
+            ...newComment,
+            [type]: event.target.value,
+        });
+    };
 
-    const handleCommentChange = (e) => setNewComment(e.target.value);
-
-    const handleCommentSubmit = () => {
-        if (newComment.trim()) {
+    const handleCommentSubmit = (type) => {
+        if (newComment[type].trim()) {
+            const timestamp = new Date();
             setComments((prevComments) => ({
                 ...prevComments,
-                [activePost]: [...prevComments[activePost], newComment],
+                [type]: [
+                    ...prevComments[type],
+                    {
+                        username,
+                        commentText: newComment[type],
+                        timestamp,
+                    },
+                ],
             }));
-            setNewComment('');
+            setNewComment({
+                ...newComment,
+                [type]: '',
+            });
         }
     };
+
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
 
     const currentTime = new Date(); // Example timestamp for demo purposes
 
@@ -51,7 +71,7 @@ const CJPHero = () => {
                 <ul className="space-y-4">
                     <li>
                         <button
-                            onClick={openModal} // Open modal on click
+                            onClick={openModal}
                             className="flex items-center space-x-3 p-3 bg-[#14213D] text-[#E5E5E5] rounded hover:bg-blue-800 w-full"
                         >
                             <FaSearch />
@@ -81,7 +101,7 @@ const CJPHero = () => {
 
             {/* Main Content Area */}
             <main className="flex-1 overflow-y-auto p-5 space-y-8 scrollbar-hidden">
-                {/* Post with gradient border */}
+                {/* Story Post */}
                 <div className="bg-gradient-to-r from-[#FCA311] via-[#D62828] to-[#8338ec] p-[2px] rounded-lg">
                     <div className="bg-white p-4 rounded shadow-md">
                         <h3 className="text-xl font-semibold">User Story Title</h3>
@@ -107,33 +127,34 @@ const CJPHero = () => {
                         </div>
                         {/* Comments Section */}
                         <div className="mt-4">
-                            <div className="mb-2">
-                                <h4 className="text-lg font-semibold">Comments:</h4>
-                                {comments.story.map((comment, index) => (
-                                    <p key={index} className="text-gray-600">{comment}</p>
-                                ))}
-                            </div>
-                            <textarea
-                                value={newComment}
-                                onChange={handleCommentChange}
+                            <input
+                                type="text"
+                                value={newComment.story}
+                                onChange={(e) => handleCommentChange('story', e)}
+                                className="w-full p-2 border rounded"
                                 placeholder="Add a comment..."
-                                className="w-full p-2 mb-4 rounded border border-gray-300"
                             />
                             <button
-                                onClick={() => {
-                                    setActivePost('story');
-                                    handleCommentSubmit();
-                                }}
-                                className="bg-blue-500 text-white py-2 px-4 rounded"
+                                onClick={() => handleCommentSubmit('story')}
+                                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
                             >
-                                Add Comment
+                                Submit
                             </button>
+                            <div className="mt-4">
+                                {comments.story.map((comment, index) => (
+                                    <div key={index} className="mb-2">
+                                        <p className="text-sm text-black-600">{comment.commentText}</p>
+                                        <p className="font-semibold text-xs text-gray-400">
+                                            {comment.username} - {formatDateTimeInCAT(comment.timestamp)}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Repeat the same for other post types (image, video) */}
-                {/* For brevity, here’s how you’d add comments to the image post */}
+                {/* Image Post */}
                 <div className="bg-gradient-to-r from-[#FCA311] via-[#D62828] to-[#8338ec] p-[2px] rounded-lg">
                     <div className="bg-white p-4 rounded shadow-md">
                         <h3 className="text-xl font-semibold">User Image Title</h3>
@@ -161,32 +182,86 @@ const CJPHero = () => {
                         </div>
                         {/* Comments Section */}
                         <div className="mt-4">
-                            <div className="mb-2">
-                                <h4 className="text-lg font-semibold">Comments:</h4>
-                                {comments.image.map((comment, index) => (
-                                    <p key={index} className="text-gray-600">{comment}</p>
-                                ))}
-                            </div>
-                            <textarea
-                                value={newComment}
-                                onChange={handleCommentChange}
+                            <input
+                                type="text"
+                                value={newComment.image}
+                                onChange={(e) => handleCommentChange('image', e)}
+                                className="w-full p-2 border rounded"
                                 placeholder="Add a comment..."
-                                className="w-full p-2 mb-4 rounded border border-gray-300"
                             />
                             <button
-                                onClick={() => {
-                                    setActivePost('image');
-                                    handleCommentSubmit();
-                                }}
-                                className="bg-blue-500 text-white py-2 px-4 rounded"
+                                onClick={() => handleCommentSubmit('image')}
+                                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
                             >
-                                Add Comment
+                                Submit
                             </button>
+                            <div className="mt-4">
+                                {comments.image.map((comment, index) => (
+                                    <div key={index} className="mb-2">
+                                        <p className="text-sm text-black-600">{comment.commentText}</p>
+                                        <p className="font-semibold text-xs text-gray-400">
+                                            {comment.username} - {formatDateTimeInCAT(comment.timestamp)}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                {/* Repeat similarly for video posts */}
+                {/* Video Post */}
+                <div className="bg-gradient-to-r from-[#FCA311] via-[#D62828] to-[#8338ec] p-[2px] rounded-lg">
+                    <div className="bg-white p-4 rounded shadow-md">
+                        <h3 className="text-xl font-semibold">User Video Title</h3>
+                        <p className="text-sm text-gray-500">by <strong>username789</strong></p>
+                        <video controls className="mt-2 w-full rounded">
+                            <source src="https://via.placeholder.com/600x300.mp4" type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
+                        <p className="text-xs text-gray-400 mt-2">
+                            Posted on {formatDateTimeInCAT(currentTime)}
+                        </p>
+                        <div className="flex items-center justify-between mt-4">
+                            <button
+                                onClick={() => handleLike('video')}
+                                className="flex items-center space-x-2 text-blue-500"
+                            >
+                                <FiThumbsUp className={likes.video ? 'text-blue-700' : ''} />
+                                <span>{likes.video ? 'Unlike' : 'Like'} this post</span>
+                            </button>
+                            <button className="flex items-center space-x-2 text-blue-500">
+                                <FaDownload />
+                                <span>Download</span>
+                            </button>
+                        </div>
+                        {/* Comments Section */}
+                        <div className="mt-4">
+                            <input
+                                type="text"
+                                value={newComment.video}
+                                onChange={(e) => handleCommentChange('video', e)}
+                                className="w-full p-2 border rounded"
+                                placeholder="Add a comment..."
+                            />
+                            <button
+                                onClick={() => handleCommentSubmit('video')}
+                                className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
+                            >
+                                Submit
+                            </button>
+                            <div className="mt-4">
+                                {comments.video.map((comment, index) => (
+                                    <div key={index} className="mb-2">
+                                        <p className="text-sm text-black-600">{comment.commentText}</p>
+                                        <p className="font-semibold text-xs text-gray-400">
+                                            {comment.username} - {formatDateTimeInCAT(comment.timestamp)}
+                                        </p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </main>
 
             {/* Modal for Search by Keyword */}
